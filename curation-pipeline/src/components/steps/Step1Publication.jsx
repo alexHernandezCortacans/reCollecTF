@@ -73,6 +73,34 @@ export default function Step1Publication() {
     return url;
   }
 
+  // Proposta canvi
+  async function fetchDirect(url, { timeoutMs = 12000 } = {}) {
+      let lastErr = null;
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), timeoutMs);
+
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          signal: ctrl.signal,
+          headers: { Accept: "application/json" },
+        });
+
+        clearTimeout(t);
+
+        if (!res.ok) {
+          lastErr = new Error(`HTTP ${res.status} (${url})`);
+        }
+
+        const json = await res.json();
+        return json;
+      } catch (e) {
+        clearTimeout(t);
+        lastErr = e;
+      }
+
+    throw lastErr || new Error("Request failed (all proxies failed).");
+  }
   // Cerca principal: pot ser PMID, DOI o títol
   async function handleSearch(e) {
     e.preventDefault();
@@ -92,7 +120,7 @@ export default function Step1Publication() {
       // Cerca directa per PMID
       if (isPMID) {
         const url = `${BASE}/esummary.fcgi?db=pubmed&id=${q}&retmode=json`;
-        const json = await fetchWithFallback(url);
+        const json = await fetchDirect(url);
         const rec = json.result?.[q];
 
         if (!rec) throw new Error("PMID not found");
@@ -113,12 +141,12 @@ export default function Step1Publication() {
           q
         )}[doi]`;
 
-        const js1 = await fetchWithFallback(esearchUrl);
+        const js1 = await fetchDirect(esearchUrl);
         const pmid = js1.esearchresult?.idlist?.[0];
 
         if (pmid) {
           const esumUrl = `${BASE}/esummary.fcgi?db=pubmed&id=${pmid}&retmode=json`;
-          const js2 = await fetchWithFallback(esumUrl);
+          const js2 = await fetchDirect(esumUrl);
           const rec = js2.result?.[pmid];
 
           if (rec) {
@@ -136,7 +164,7 @@ export default function Step1Publication() {
         // Fallback a CrossRef si PubMed no retorna res
         if (!data) {
           const crUrl = `https://api.crossref.org/works/${encodeURIComponent(q)}`;
-          const crJson = await fetchWithFallback(crUrl);
+          const crJson = await fetchDirect(crUrl);
           const m = crJson.message;
 
           if (!m) throw new Error("DOI not found in CrossRef");
@@ -160,13 +188,13 @@ export default function Step1Publication() {
           q
         )}[title]`;
 
-        const js1 = await fetchWithFallback(esearchUrl);
+        const js1 = await fetchDirect(esearchUrl);
         const pmid = js1.esearchresult?.idlist?.[0];
 
         if (!pmid) throw new Error("No article found with this title");
 
         const esumUrl = `${BASE}/esummary.fcgi?db=pubmed&id=${pmid}&retmode=json`;
-        const js2 = await fetchWithFallback(esumUrl);
+        const js2 = await fetchDirect(esumUrl);
         const rec = js2.result?.[pmid];
 
         data = {
