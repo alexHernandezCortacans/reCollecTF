@@ -99,7 +99,7 @@ export default function Step1Publication() {
         lastErr = e;
       }
 
-    throw lastErr || new Error("Request failed (all proxies failed).");
+    throw lastErr || new Error("Request failed.");
   }
   // Cerca principal: pot ser PMID, DOI o títol
   async function handleSearch(e) {
