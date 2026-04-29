@@ -7,29 +7,31 @@ import SearchPage from "./pages/Search/SearchPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useUser } from "@/contexts/UserContext";
 import "../curation-pipeline/src/index.css";
-
 import CurationPipelineApp from "../curation-pipeline/src/App.jsx";
 import { CurationProvider } from "../curation-pipeline/src/context/CurationContext"; 
+import DetailedView from "./components/uniprod-tf-queries/detail/DetailedView.jsx";
 
 function AppRoutes() {
   const { userStatus } = useUser();
-
   return (
     <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="Search/:step?" element={<SearchPage />} />
-        </Route>
-
-        <Route
-          path="/curation-pipeline/*"
+          <Route
+          path="curation-pipeline/*"
           element={
             <CurationProvider>
               <CurationPipelineApp />
             </CurationProvider>
           }
         />
+          <Route path="/:expressionId" element={<DetailedView />} />
+        </Route>
+
+        
+
       </Routes>
     </HashRouter>
   );

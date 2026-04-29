@@ -114,7 +114,7 @@ export async function getSearchResults(tfs, species) {
     const query = `
         SELECT
             TF.name AS TF_name, TFI.uniprot_accession, CUR.TF_species, CUR.curation_id, PUB.publication_type, PUB.pmid, 
-            CURSI.annotated_seq, CURSI.TF_type, ET.name AS tech_name, ET.technique_id, ET.EO_term, SI.start, SI.end, SI.strand, 
+            CURSI.annotated_seq, CURSI.TF_type, CURSI.TF_function, REG.evidence_type, ET.name AS tech_name, ET.technique_id, ET.EO_term, SI.start, SI.end, SI.strand, 
             GENOME.genome_accession, GENE.name AS gene_name, GENE.locus_tag
         FROM 
             core_tf TF

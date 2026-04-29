@@ -1,8 +1,7 @@
 //Functions that will run the queries
 
 //Example 
-
-import { runQuery } from "../queryExecutor";
+import runQuery from "../queryExecutor";
 
 
 
@@ -116,9 +115,9 @@ export async function getSearchResults(tfs, species) {
     const query = `
         SELECT
             TF.name AS TF_name, TFI.uniprot_accession, CUR.TF_species, CUR.curation_id, PUB.publication_type, PUB.pmid, 
-            CURSI.annotated_seq, CURSI.TF_type, ET.name AS tech_name, ET.technique_id, ET.EO_term, SI.start, SI.end, SI.strand, 
+            CURSI.annotated_seq, CURSI.TF_type, CURSI.TF_function, REG.evidence_type, ET.name AS tech_name, ET.technique_id, ET.EO_term, SI.start, SI.end, SI.strand, 
             GENOME.genome_accession, GENE.name AS gene_name, GENE.locus_tag
-        FROM 
+        FROM
             core_tf TF
         JOIN core_tfinstance TFI ON TF.TF_id = TFI.TF_id
         JOIN core_curation_TF_instances CURTF ON TFI.TF_instance_id = CURTF.tfinstance_id
@@ -139,4 +138,31 @@ export async function getSearchResults(tfs, species) {
     console.log("VALUES: ", values);
     
     return runQuery(query, values);
+}
+
+// Singular version of getSearchResults only needs tf_function to get the data
+export async function getSearchResult(tf_id) {
+    const query = `
+        SELECT
+        TF.name AS TF_name, TFI.uniprot_accession, CUR.TF_species, CUR.curation_id, PUB.publication_type, PUB.pmid, 
+            CURSI.annotated_seq, CURSI.TF_type, CURSI.TF_function, REG.evidence_type, ET.name AS tech_name, ET.technique_id, ET.EO_term, SI.start, SI.end, SI.strand, 
+            GENOME.genome_accession, GENE.name AS gene_name, GENE.locus_tag
+    FROM
+    	core_tf TF
+    JOIN core_tfinstance TFI ON TF.TF_id = TFI.TF_id
+    JOIN core_curation_TF_instances CURTF ON TFI.TF_instance_id = CURTF.tfinstance_id
+    JOIN core_curation CUR ON CURTF.curation_id = CUR.curation_id
+    JOIN core_publication PUB ON CUR.publication_id = PUB.publication_id
+    JOIN core_curation_siteinstance CURSI ON CUR.curation_id = CURSI.curation_id
+    JOIN core_curation_siteinstance_experimental_techniques CURSIET ON CURSI.id = CURSIET.curation_siteinstance_id
+    JOIN core_experimentaltechnique ET ON CURSIET.experimentaltechnique_id = ET.technique_id
+    JOIN core_siteinstance SI ON CURSI.site_instance_id = SI.site_id
+    JOIN core_genome GENOME ON SI.genome_id = GENOME.genome_id
+    JOIN core_gene GENE ON GENOME.genome_id = GENE.genome_id
+    JOIN core_taxonomy TAX ON GENOME.taxonomy_id = TAX.id 
+    JOIN core_regulation REG ON CURSI.id = REG.curation_site_instance_id AND GENE.gene_id = REG.gene_id
+	WHERE TFI.TF_instance_id = "${tf_id}"
+    `;
+
+    return runQuery(query);
 }
