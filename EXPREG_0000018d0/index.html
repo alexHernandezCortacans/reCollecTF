@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LexA - CollecTF</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      background-color: rgb(30, 30, 30);
+      font-family: Segoe UI, sans-serif;
+      color: rgb(245, 245, 245);
+    }
+
+    .btn {
+      cursor: pointer;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: rgb(51, 65, 85);
+      padding: 0.5rem 1rem;
+      color: rgb(245, 245, 245);
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background-color: rgb(30, 41, 59);
+    }
+
+    .text-accent {
+      color: rgb(79, 195, 247);
+    }
+
+    .bg-surface {
+      background-color: rgb(42, 42, 42);
+    }
+
+    .border-border {
+      border-color: rgb(68, 68, 68);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center bg-surface px-8 py-4 border-b border-border">
+    <a href="https://erilllab.github.io/reCollecTF/" 
+    class="text-5xl font-bold text-accent cursor-pointer hover:text-white no-underline">
+    CollecTF
+    </a>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-screen-xl mx-auto px-4 mt-6">
+
+    <div class="mb-6">
+      <b class="text-lg">LexA</b>
+
+      <p class="mt-2 text-sm text-gray-300">
+        <a class="text-accent hover:underline"
+           href="https://www.uniprot.org/uniprotkb/B8CUX0/entry">
+          UniProtKB: B8CUX0
+        </a>
+        regulon and binding site collection of Shewanella piezotolerans WP3
+      </p>
+    </div>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm table-fixed border-collapse">
+
+        <thead>
+          <tr class="bg-surface">
+            <th class="border border-gray-700 p-2">Genome</th>
+            <th class="border border-gray-700 p-2">TF</th>
+            <th class="border border-gray-700 p-2">TF conformation</th>
+            <th class="border border-gray-700 p-2">Site Sequence</th>
+            <th class="border border-gray-700 p-2">Site Location</th>
+            <th class="border border-gray-700 p-2">Experimental Techniques</th>
+            <th class="border border-gray-700 p-2">Gene Regulation</th>
+            <th class="border border-gray-700 p-2">Curation</th>
+            <th class="border border-gray-700 p-2">PMID</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTATTAGTAAACAG</td>
+        <td class="border p-2">+  [259533, 259548]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">swp_0246 (swp_0246)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTTTTTATATACAG</td>
+        <td class="border p-2">+  [1181728, 1181743]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">swp_1179 (swp_1179)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTTTTTATATACAG</td>
+        <td class="border p-2">+  [2974930, 2974945]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">swp_2821 (swp_2821)</span>, </span><span><span style="color: #ffffff;">swp_2820 (swp_2820)</span>, </span><span><span style="color: #ffffff;">swp_2822 (swp_2822)</span>, </span><span><span style="color: #ffffff;">swp_2824 (swp_2824)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTGCGGTTTTACAG</td>
+        <td class="border p-2">+  [964990, 965005]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">swp_0958 (swp_0958)</span>, </span><span><span style="color: #ffffff;">swp_0959 (swp_0959)</span>, </span><span><span style="color: #ffffff;">swp_0960 (swp_0960)</span>, </span><span><span style="color: #ffffff;">swp_0961 (swp_0961)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTATGATTGTACAG</td>
+        <td class="border p-2">+  [1387692, 1387707]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">swp_1365 (swp_1365)</span>, </span><span><span style="color: #F44336;">swp_1366 (swp_1366)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTATGTATGTACAG</td>
+        <td class="border p-2">+  [2425344, 2425359]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">swp_2323 (swp_2323)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTTAACTCCTACAG</td>
+        <td class="border p-2">+  [4525254, 4525269]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">swp_4323 (swp_4323)</span>, </span><span><span style="color: #ffffff;">swp_4324 (swp_4324)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTATATACTAACAG</td>
+        <td class="border p-2">+  [5049875, 5049890]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">swp_4820 (swp_4820)</span>, </span><span><span style="color: #ffffff;">swp_4819 (swp_4819)</span>, </span><span><span style="color: #4CAF50;">swp_4821 (swp_4821)</span>, </span><span><span style="color: #4CAF50;">swp_4822 (swp_4822)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTATAGAAAAACAG</td>
+        <td class="border p-2">+  [5049894, 5049909]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">swp_4820 (swp_4820)</span>, </span><span><span style="color: #ffffff;">swp_4819 (swp_4819)</span>, </span><span><span style="color: #F44336;">swp_4821 (swp_4821)</span>, </span><span><span style="color: #F44336;">swp_4822 (swp_4822)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTATAGAAAAACAG</td>
+        <td class="border p-2">+  [1364952, 1364967]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">swp_1346 (swp_1346)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_011566.1" target="_blank" rel="noopener noreferrer">NC_011566.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/B8CUX0" target="_blank" rel="noopener noreferrer">B8CUX0</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">CTGTAAAGTGCAACAG</td>
+        <td class="border p-2">+  [5342831, 5342846]</td>
+        <td class="border p-2">PSSM site search (ECO:0005659), DNA-array expression analysis (ECO:0005525)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">swp_5119 (swp_5119)</span>, </span><span><span style="color: #ffffff;">swp_5120 (swp_5120)</span>, </span><span><span style="color: #ffffff;">swp_5121 (swp_5121)</span>, </span><span><span style="color: #ffffff;">swp_5122 (swp_5122)</span>, </span><span><span style="color: #ffffff;">swp_5123 (swp_5123)</span>, </span><span><span style="color: #F44336;">swp_5124 (swp_5124)</span>, </span><span><span style="color: #ffffff;">swp_5125 (swp_5125)</span>, </span><span><span style="color: #ffffff;">swp_5126 (swp_5126)</span>, </span><span><span style="color: #ffffff;">swp_5127 (swp_5127)</span></span></td>
+        <td class="border p-2">1120</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/26150814" target="_blank" rel="noopener noreferrer">26150814</a></td>
+      </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </main>
+
+</body>
+</html>
