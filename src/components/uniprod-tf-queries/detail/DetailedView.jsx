@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Result from "./common/Result";
 import { getSearchResult } from "../../../db/queries/search";
 import { getQuerySplitView } from "../../../db/queries/uniprodQueries";
-
-export default function DetailedView({ expressionId }) {
+//expressionId
+export default function DetailedView({  }) {
   const navigate = useNavigate();
+const { expressionId } = useParams();
   const [data, setData] = useState(null);
   const [dataSV, setDataSV] = useState(null);
   const [error, setError] = useState(null);
@@ -18,6 +19,7 @@ export default function DetailedView({ expressionId }) {
 
   useEffect(() => {
     if (!expressionId || !/^EXPREG_[a-f0-9A-F]+$/.test(expressionId)) {
+      console.log("No ha funcionat");
       navigate('/');
       return;
     }
@@ -48,7 +50,7 @@ export default function DetailedView({ expressionId }) {
     <>
       <header className="flex justify-between items-center bg-surface px-8 py-4 border-b border-border">
         <h1 className="text-5xl font-bold text-accent cursor-pointer hover:text-text" onClick={handleLogoClick}>
-          <Link className="text-accent hover:underline" to="https://erilllab.github.io/reCollecTF/">CollecTFs</Link>
+          <Link className="text-accent hover:underline" to="https://erilllab.github.io/reCollecTF/">CollecTF</Link>
         </h1>
       </header> <br/> <br/>
       <main>

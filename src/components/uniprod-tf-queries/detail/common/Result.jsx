@@ -1,5 +1,5 @@
 import { data } from "react-router-dom";
-
+    
 const Result = ({ result }) => {
     if (!Array.isArray(result) || result.length === 0) {
         return <div>No results</div>;

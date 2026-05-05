@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "generate-reports": "node scripts/generate-detailed-views.js",
     "copy-wasm": "cp node_modules/sql.js-httpvfs/dist/sqlite.worker.js public/ && cp node_modules/sql.js-httpvfs/dist/sql-wasm.wasm public/",
     "build": "npm run copy-wasm && vite build",
     "lint": "eslint .",
@@ -18,6 +19,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
+    "sql.js": "^1.14.1",
     "sql.js-httpvfs": "^0.8.12"
   },
   "devDependencies": {

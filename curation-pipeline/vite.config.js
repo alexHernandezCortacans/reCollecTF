@@ -32,7 +32,6 @@ export default defineConfig({
           next()
         })
       }
-    
     }
   ],
   base: "/reCollecTF/",

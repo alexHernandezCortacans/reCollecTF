@@ -1,0 +1,55 @@
+# .github/workflows/create-expression-page.yml
+name: Create Expression Page
+on:
+  workflow_dispatch:
+    inputs:
+      expression_id:
+        description: "Expression ID (e.g. EXPREG_000014f0)"
+        required: true
+      html_content:
+        description: "HTML content (base64 encoded)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  create-page:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate expression_id
+        run: |
+          set -euo pipefail
+          EXPR_ID="${{ github.event.inputs.expression_id }}"
+          if ! echo "$EXPR_ID" | grep -qE '^EXPREG_[a-f0-9A-F]+$'; then
+            echo "Invalid expression_id: $EXPR_ID"
+            exit 1
+          fi
+          echo "EXPR_ID=$EXPR_ID" >> $GITHUB_ENV
+
+      - name: Write HTML file
+        run: |
+          set -euo pipefail
+          mkdir -p "./public/$EXPR_ID"
+          echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
+
+      - name: Commit and push
+        env:
+          TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add "./public/$EXPR_ID/index.html"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Add expression page: $EXPR_ID"
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+          git push origin main

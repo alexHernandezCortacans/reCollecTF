@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fur - CollecTF</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      background-color: rgb(30, 30, 30);
+      font-family: Segoe UI, sans-serif;
+      color: rgb(245, 245, 245);
+    }
+
+    .btn {
+      cursor: pointer;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: rgb(51, 65, 85);
+      padding: 0.5rem 1rem;
+      color: rgb(245, 245, 245);
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background-color: rgb(30, 41, 59);
+    }
+
+    .text-accent {
+      color: rgb(79, 195, 247);
+    }
+
+    .bg-surface {
+      background-color: rgb(42, 42, 42);
+    }
+
+    .border-border {
+      border-color: rgb(68, 68, 68);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center bg-surface px-8 py-4 border-b border-border">
+    <a href="https://erilllab.github.io/reCollecTF/" 
+    class="text-5xl font-bold text-accent cursor-pointer hover:text-white no-underline">
+    CollecTF
+    </a>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-screen-xl mx-auto px-4 mt-6">
+
+    <div class="mb-6">
+      <b class="text-lg">Fur</b>
+
+      <p class="mt-2 text-sm text-gray-300">
+        <a class="text-accent hover:underline"
+           href="https://www.uniprot.org/uniprotkb/Q5F961/entry">
+          UniProtKB: Q5F961
+        </a>
+        regulon and binding site collection of Neisseria gonorrhoeae FA 1090
+      </p>
+    </div>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm table-fixed border-collapse">
+
+        <thead>
+          <tr class="bg-surface">
+            <th class="border border-gray-700 p-2">Genome</th>
+            <th class="border border-gray-700 p-2">TF</th>
+            <th class="border border-gray-700 p-2">TF conformation</th>
+            <th class="border border-gray-700 p-2">Site Sequence</th>
+            <th class="border border-gray-700 p-2">Site Location</th>
+            <th class="border border-gray-700 p-2">Experimental Techniques</th>
+            <th class="border border-gray-700 p-2">Gene Regulation</th>
+            <th class="border border-gray-700 p-2">Curation</th>
+            <th class="border border-gray-700 p-2">PMID</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">TTAAAATAGAACCATTATC</td>
+        <td class="border p-2">+  [79590, 79608]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">NGO0073 (NGO0073)</span>, </span><span><span style="color: #ffffff;">NGO0076 (NGO0076)</span>, </span><span><span style="color: #ffffff;">NGO0077 (NGO0077)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATAATGGTAACGATTATT</td>
+        <td class="border p-2">+  [121262, 121279]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">NGO0107 (NGO0107)</span>, </span><span><span style="color: #4CAF50;">NGO0108 (NGO0108)</span>, </span><span><span style="color: #ffffff;">NGO0109 (NGO0109)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATATTGATTATCATT</td>
+        <td class="border p-2">+  [127509, 127523]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">NGO0113 (NGO0113)</span>, </span><span><span style="color: #4CAF50;">NGO0114 (NGO0114)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATAAATGCAAATAATTATT</td>
+        <td class="border p-2">+  [221804, 221822]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO0217 (NGO0217)</span>, </span><span><span style="color: #ffffff;">NGO0216 (NGO0216)</span>, </span><span><span style="color: #ffffff;">NGO0215 (NGO0215)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AAAAATAGGAACAATTATC</td>
+        <td class="border p-2">+  [321171, 321189]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO0322 (NGO0322)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">CTTATTGATATTAATTCTT</td>
+        <td class="border p-2">+  [426627, 426645]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">NGO0432 (NGO0432)</span>, </span><span><span style="color: #ffffff;">NGO0433 (NGO0433)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATATTAATAATAATTA</td>
+        <td class="border p-2">+  [527781, 527796]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO0553 (NGO0553)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AATTAAAACTCATTATCA</td>
+        <td class="border p-2">+  [531637, 531654]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO0554 (NGO0554)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">GAAAATTACTTTTATTATC</td>
+        <td class="border p-2">+  [642483, 642501]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO0652 (NGO0652)</span>, </span><span><span style="color: #ffffff;">NGO0653 (NGO0653)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AATAAGAATTATTTTCA</td>
+        <td class="border p-2">+  [710271, 710287]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">NGO0710 (NGO0710)</span>, </span><span><span style="color: #F44336;">NGO0711 (NGO0711)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">TGTAATGATAATTATTATC</td>
+        <td class="border p-2">+  [884283, 884301]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">NGO0903 (NGO0903)</span>, </span><span><span style="color: #ffffff;">NGO0902 (NGO0902)</span>, </span><span><span style="color: #ffffff;">NGO0901 (NGO0901)</span>, </span><span><span style="color: #F44336;">NGO0904 (NGO0904)</span>, </span><span><span style="color: #ffffff;">NGO0905 (NGO0905)</span>, </span><span><span style="color: #ffffff;">NGO0906 (NGO0906)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">TGATAATAACTATCATTAT</td>
+        <td class="border p-2">+  [1228480, 1228498]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO1275 (NGO1275)</span>, </span><span><span style="color: #ffffff;">NGO1276 (NGO1276)</span>, </span><span><span style="color: #ffffff;">NGO1275 (NGO1275)</span>, </span><span><span style="color: #F44336;">NGO1276 (NGO1276)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">TGATAATCATTA</td>
+        <td class="border p-2">+  [1274787, 1274798]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">NGO1317 (NGO1317)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATAAACGAAATTTATTATC</td>
+        <td class="border p-2">+  [1276330, 1276348]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO1318 (NGO1318)</span>, </span><span><span style="color: #ffffff;">NGO1319 (NGO1319)</span>, </span><span><span style="color: #ffffff;">NGO1320 (NGO1320)</span>, </span><span><span style="color: #ffffff;">NGO1321 (NGO1321)</span>, </span><span><span style="color: #ffffff;">NGO1322 (NGO1322)</span>, </span><span><span style="color: #ffffff;">NGO1323 (NGO1323)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATAAATAATAATTATTATC</td>
+        <td class="border p-2">+  [1392671, 1392689]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">NGO1430 (NGO1430)</span>, </span><span><span style="color: #ffffff;">NGO1431 (NGO1431)</span>, </span><span><span style="color: #ffffff;">NGO1432 (NGO1432)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AAGAATGATAAGGATTATT</td>
+        <td class="border p-2">+  [1465183, 1465201]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO1496 (NGO1496)</span>, </span><span><span style="color: #ffffff;">NGO1495 (NGO1495)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AAATAAGAATCGTTATCA</td>
+        <td class="border p-2">+  [1712427, 1712444]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">NGO1751 (NGO1751)</span>, </span><span><span style="color: #ffffff;">NGO1750 (NGO1750)</span>, </span><span><span style="color: #ffffff;">NGO1749 (NGO1749)</span>, </span><span><span style="color: #ffffff;">NGO1748 (NGO1748)</span>, </span><span><span style="color: #ffffff;">NGO1747 (NGO1747)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">GCGAACGATAATCATACGC</td>
+        <td class="border p-2">+  [1749495, 1749513]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO1779 (NGO1779)</span>, </span><span><span style="color: #ffffff;">aat (NGO1778)</span>, </span><span><span style="color: #ffffff;">NGO1780 (NGO1780)</span>, </span><span><span style="color: #ffffff;">NGO1781 (NGO1781)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">GCTAATAATAATAATTATC</td>
+        <td class="border p-2">+  [1976136, 1976154]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">NGO2003 (NGO2003)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">ATAAATGATAATCTATATC</td>
+        <td class="border p-2">+  [2069775, 2069793]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO2092 (NGO2092)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AAAAATAATAATAATTATT</td>
+        <td class="border p-2">+  [2072063, 2072081]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">NGO2093 (NGO2093)</span>, </span><span><span style="color: #ffffff;">groES (NGO2094)</span>, </span><span><span style="color: #ffffff;">groEL (NGO2095)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_002946.2" target="_blank" rel="noopener noreferrer">NC_002946.2</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q5F961" target="_blank" rel="noopener noreferrer">Q5F961</a>
+        </td>
+        <td class="border p-2">N/A</td>
+        <td class="border p-2 break-words">AAATGATAACCTTTATCA</td>
+        <td class="border p-2">+  [2102757, 2102774]</td>
+        <td class="border p-2">DNA-array expression analysis (ECO:0005525), FURTA (ECO:0005633), Machine learning prediction (ECO:0005649)</td>
+        <td class="border p-2"><span><span style="color: #F44336;">NGO2116 (NGO2116)</span>, </span><span><span style="color: #ffffff;">NGO2117 (NGO2117)</span>, </span><span><span style="color: #ffffff;">NGO2118 (NGO2118)</span>, </span><span><span style="color: #ffffff;">NGO2119 (NGO2119)</span>, </span><span><span style="color: #ffffff;">NGO2120 (NGO2120)</span>, </span><span><span style="color: #ffffff;">NGO2121 (NGO2121)</span>, </span><span><span style="color: #ffffff;">NGO2122 (NGO2122)</span>, </span><span><span style="color: #ffffff;">NGO2123 (NGO2123)</span>, </span><span><span style="color: #ffffff;">NGO2124 (NGO2124)</span></span></td>
+        <td class="border p-2">633</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/19854902" target="_blank" rel="noopener noreferrer">19854902</a></td>
+      </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </main>
+
+</body>
+</html>

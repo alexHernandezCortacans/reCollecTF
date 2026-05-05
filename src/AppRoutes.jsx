@@ -25,8 +25,8 @@ function AppRoutes() {
             <CurationProvider>
               <CurationPipelineApp />
             </CurationProvider>
-          }
-        />
+            }
+          />
           <Route path="/:expressionId" element={<DetailedView />} />
         </Route>
 

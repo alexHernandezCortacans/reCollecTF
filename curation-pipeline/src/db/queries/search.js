@@ -116,7 +116,7 @@ export async function getSearchResults(tfs, species) {
             TF.name AS TF_name, TFI.uniprot_accession, CUR.TF_species, CUR.curation_id, PUB.publication_type, PUB.pmid, 
             CURSI.annotated_seq, CURSI.TF_type, CURSI.TF_function, REG.evidence_type, ET.name AS tech_name, ET.technique_id, ET.EO_term, SI.start, SI.end, SI.strand, 
             GENOME.genome_accession, GENE.name AS gene_name, GENE.locus_tag
-        FROM 
+        FROM
             core_tf TF
         JOIN core_tfinstance TFI ON TF.TF_id = TFI.TF_id
         JOIN core_curation_TF_instances CURTF ON TFI.TF_instance_id = CURTF.tfinstance_id
