@@ -93,7 +93,7 @@ function buildTableRows(result) {
   return rows;
 }
 
-function buildHTML(dataSV, result) {
+export function buildHTMLFromData(dataSV, result) {
   const tableRows = buildTableRows(result);
 
   return `<!DOCTYPE html>
@@ -167,6 +167,17 @@ function buildHTML(dataSV, result) {
       </p>
     </div>
 
+    <!-- GUIDE -->
+    <p class="mb-4 text-sm text-gray-300">
+      For the selected transcription factor and species, the list of curated binding sites in the database are displayed below.
+      Gene regulation diagrams show
+      <span style="text-decoration: underline;">[binding sites]</span>,
+      <span style="color: #4CAF50; text-decoration: underline;">[positively-regulated genes]</span>,
+      <span style="color: #F44336; text-decoration: underline;">[negatively-regulated genes]</span>,
+      <span style="color: #FFEB3B; text-decoration: underline;">[both positively and negatively regulated genes]</span>,
+      <span style="color: #2196F3; text-decoration: underline;">[genes with unspecified type of regulation]</span>.
+    </p>
+
     <!-- TABLE -->
     <div class="overflow-x-auto">
       <table class="w-full text-sm table-fixed border-collapse">
@@ -214,5 +225,9 @@ export async function generateDetailedViewHTML(expressionId) {
     throw new Error(`Sin datos para: ${expressionId}`);
   }
 
-  return buildHTML(dataSV, result);
+  if (!result || result.length === 0) {
+    throw new Error(`Sin resultados de búsqueda para: ${expressionId}`);
+  }
+
+  return buildHTMLFromData(dataSV, result);
 }

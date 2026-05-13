@@ -1,5 +1,9 @@
 // src/utils/serverless.js
-const dispatchUrl = "https://recollectf.vercel.app/api/functions/send-form.ts";
+// Canviar a original en acabar
+//const dispatchUrl = "https://recollectf.vercel.app/api/functions/send-form.ts";
+const dispatchUrl = "https://recollectf2.vercel.app/api/functions/send-form.ts";
+import { getMaxTfInstanceId } from "../../../src/db/queries/uniprodQueries";
+import { expressionIdFromTfInstanceId } from "../../../src/utils/tfIdConverterToExpressionId";
 
 export async function dispatchWorkflow(data) {
   console.log("Data to dispatch:", data);
@@ -21,6 +25,34 @@ export async function dispatchWorkflow(data) {
 
   if (!res.ok) {
     const err = new Error(`Dispatch failed (${res.status})`);
+    err.payload = payload;
+    throw err;
+  }
+
+  return payload;
+}
+
+export async function createUniprodAccessionFile(htmlContent) {
+  const tfInstanceId = await getMaxTfInstanceId();
+  const expressionId = expressionIdFromTfInstanceId(tfInstanceId + 1); //+1 to generate the next tfId
+
+  const res = await fetch("https://recollectf2.vercel.app/api/functions/create-expression-page", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ expressionId, htmlContent }),
+  });
+
+  const text = await res.text();
+  let payload;
+  try {
+    payload = text ? JSON.parse(text) : null;
+  } catch {
+    payload = text;
+  }
+
+  if (!res.ok) {
+    const err = new Error(`Create expression page failed (${res.status})`);
     err.payload = payload;
     throw err;
   }

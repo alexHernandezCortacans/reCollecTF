@@ -1,7 +1,11 @@
 //import { useNavigate } from "react-router-dom";
 //import "./Login.css";
-const loginUrl = "https://recollectf.vercel.app/api/auth/login"; 
-const logoutUrl = "https://recollectf.vercel.app/api/auth/logout"; 
+// Canviar en acabar
+// const loginUrl = "https://recollectf.vercel.app/api/auth/login"; 
+// const logoutUrl = "https://recollectf.vercel.app/api/auth/logout"; 
+
+const loginUrl = "https://recollectf2.vercel.app/api/auth/login"; 
+const logoutUrl = "https://recollectf2.vercel.app/api/auth/logout"; 
 
 function LoginButton({ userStatus, user, loading }) {
 

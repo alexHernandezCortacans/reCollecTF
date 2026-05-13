@@ -1,7 +1,7 @@
 //Functions that will run the queries
 
 //Example 
-import runQuery from "../queryExecutor";
+import runQuery from "../queryExecutor.js";
 
 
 

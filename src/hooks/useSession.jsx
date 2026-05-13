@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-const vercelUrl = "https://recollectf.vercel.app";
+//Canviar en acabar
+// const vercelUrl = "https://recollectf.vercel.app";
+const vercelUrl = "https://recollectf2.vercel.app";
+
 
 // En local (Vite), import.meta.env.DEV === true
 const DISABLE_AUTH =

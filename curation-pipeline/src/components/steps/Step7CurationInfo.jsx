@@ -2,6 +2,10 @@
 import { useMemo, useState } from "react";
 import { useCuration } from "../../context/CurationContext";
 import { dispatchWorkflow } from "../../utils/serverless";
+import { generateHTMLFromCurationContext } from "../../../../scripts/generateHtmlFromCurationInfo";
+
+const uniprodAccessionCode;
+const tfInstanceId;
 
 function esc(str) {
   return String(str ?? "").replace(/'/g, "''");
@@ -123,6 +127,8 @@ export default function Step7CurationInfo() {
     const tfDesc = pickFirstNonEmpty(tf?.description, "", "");
 
     const uniAcc = pickFirstNonEmpty(firstAcc(uniprotList), tf?.uniprot_accession, tf?.uniprot, "");
+    uniprodAccessionCode = uniAcc;
+    
     const refAcc = pickFirstNonEmpty(firstAcc(refseqList), tf?.refseq_accession, tf?.refseq, "");
     const tfInstanceDesc = pickFirstNonEmpty(firstDesc(uniprotList), firstDesc(refseqList), tfDesc, tfName, "—");
     const tfInstanceNotes = "";
@@ -574,11 +580,24 @@ WHERE ${geneIdExpr} IS NOT NULL;
     setLoading(true);
 
     try {
+      const htmlContent = generateHTMLFromCurationContext({
+        tf,
+        uniprotList,
+        strainData,
+        publication,
+        techniques,
+        genomeList,
+        step4Data,
+        step5Data,
+        step6Data,
+      });
       const sqlString = buildFullSql();
 
       await dispatchWorkflow({
         inputs: { queries: sqlString },
       });
+
+      await createUniprodAccessionFile(htmlContent);
 
       setStep7Data({
         revisionReason,

@@ -1,4 +1,4 @@
-import { dbWorkerPromise } from "./dbClient";
+import { dbWorkerPromise } from "./dbClient.js";
 
 export default async function runQuery(sql, params = []) {
   const worker = await dbWorkerPromise;
@@ -7,7 +7,7 @@ export default async function runQuery(sql, params = []) {
 
 
 /*
-import { initDb } from "./dbClient";
+import { initDb } from "./dbClient.js";
 
 export async function runQuery(sql, params = []) {
 

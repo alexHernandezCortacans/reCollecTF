@@ -1,4 +1,4 @@
-import runQuery from "../queryExecutor";
+import runQuery from "../queryExecutor.js";
 
 
 export async function getQueryDataSummary(tf_instance) {
@@ -69,5 +69,28 @@ export async function getQuerySequence(tf_instance) {
     return runQuery(query)
 }
 
+export async function getAllTfInstanceIds() {
 
+    const query = `
+    SELECT 
+    DISTINCT TF_instance_id 
+    FROM core_tfinstance 
+    ORDER BY TF_instance_id
+    `
+
+    const rows = await runQuery(query);
+    return rows.map((row) => row.TF_instance_id);
+}
+
+export async function getMaxTfInstanceId() {
+
+    const query = `
+    SELECT MAX(TF_instance_id) AS max_tf_instance_id
+    FROM core_tfinstance
+    `;
+
+    const result = await runQuery(query);
+
+    return result[0]?.max_tf_instance_id ?? null;
+}
     

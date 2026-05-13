@@ -49,7 +49,7 @@ const handleChange = (event, newValue) => {
         <Tab label = 'Split View' sx={{color:"white"}}/>
         <Tab label = 'Export Data' sx={{color:"white"}}/>
       </Tabs>
-
+      
       
       {tabValue === 0 && <SplitView tf_instance_id={tf_instance_id}/>}
       {tabValue === 1 && <ExportData />}
