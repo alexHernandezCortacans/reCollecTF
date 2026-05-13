@@ -4,8 +4,8 @@ import { useCuration } from "../../context/CurationContext";
 import { dispatchWorkflow } from "../../utils/serverless";
 import { generateHTMLFromCurationContext } from "../../../../scripts/generateHtmlFromCurationInfo";
 
-const uniprodAccessionCode;
-const tfInstanceId;
+var uniprodAccessionCode;
+var tfInstanceId;
 
 function esc(str) {
   return String(str ?? "").replace(/'/g, "''");

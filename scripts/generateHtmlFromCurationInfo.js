@@ -1,6 +1,6 @@
 // generateHTMLFromCurationData.js
 
-import { buildHTMLFromData } from "./GenerateDetailedView.js";
+import { buildHTMLFromData } from "../src/components/uniprod-tf-queries/GenerateDetailedView";
 
 export function generateHTMLFromCurationContext({
   tf,
