@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useCuration } from "../../context/CurationContext";
 import { dispatchWorkflow } from "../../utils/serverless";
 import { generateHTMLFromCurationContext } from "../../../../scripts/generateHtmlFromCurationInfo";
+import { createUniprodAccessionFile } from "../../utils/serverless";
 
 var uniprodAccessionCode;
 var tfInstanceId;
