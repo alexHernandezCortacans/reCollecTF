@@ -1,5 +1,5 @@
 import sqljsHttpvfs from "sql.js-httpvfs";
-import { createDbWorker } from "sql.js-httpvfs";
+const { createDbWorker } = sqljsHttpvfs.default || sqljsHttpvfs;
 
 const isNode = typeof Worker === "undefined";
 
