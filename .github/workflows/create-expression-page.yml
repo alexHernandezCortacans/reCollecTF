@@ -44,7 +44,7 @@ jobs:
         run: |
           set -euo pipefail
           UNIPROT="${{ github.event.inputs.uniprot_accession }}"
-          DBXREF_FILE="public/uniprot_dbxref.txt"
+          DBXREF_FILE="public/static/uniprot_dbxref.txt"
 
           # Solo actúa si se pasó uniprot_accession
           if [ -z "$UNIPROT" ]; then
