@@ -83,8 +83,9 @@ export async function generateHTMLFromCurationContext({
         strand: String(row.strand),
       }));
     }
+  }
 
-    result = [...resultFromDB];
+  result = [...resultFromDB];
 
   for (const site of sitesList) {
     const bundle = selectedBySite?.[site];
