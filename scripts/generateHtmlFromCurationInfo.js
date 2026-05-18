@@ -3,9 +3,9 @@
 import { buildHTMLFromData } from "../src/components/uniprod-tf-queries/GenerateDetailedView";
 import { getMaxCurationId } from "../src/db/queries/uniprodQueries";
 import { getSearchResult } from "../src/db/queries/search";
-import { geTfInstanceFromUniAcc } from "../src/db/queries/uniprodQueries";
+import { getTfInstanceFromUniAcc } from "../src/db/queries/uniprodQueries";
 
-export function generateHTMLFromCurationContext({
+export async function generateHTMLFromCurationContext({
   tf,
   uniprotList,
   strainData,
@@ -65,14 +65,12 @@ export function generateHTMLFromCurationContext({
   const selectedBySite = step4Data?.selectedBySite || {};
   const techList = Array.isArray(techniques) ? techniques : [];
 
-  const tf_instance_id = await geTfInstanceFromUniAcc(uniAcc);
+  const tf_instance_id = await getTfInstanceFromUniAcc(uniAcc);
+
+  let result = [];
 
   if (tf_instance_id != null) {
-    const result = await getSearchResult(tf_instance_id);
-  }
-  
-  if (result == null) {
-    const result = [];
+    result = await getSearchResult(tf_instance_id);
   }
 
   for (const site of sitesList) {

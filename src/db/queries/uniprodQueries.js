@@ -106,7 +106,7 @@ export async function getMaxCurationId() {
     return result[0]?.max_curation_id ?? null;
 }
 
-export async function geTfInstanceFromUniAcc(uniAccess) {
+export async function getTfInstanceFromUniAcc(uniAccess) {
 
     const query = `
     SELECT TF_instance_id 
