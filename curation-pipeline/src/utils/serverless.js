@@ -32,9 +32,8 @@ export async function dispatchWorkflow(data) {
   return payload;
 }
 
-export async function createUniprodAccessionFile(htmlContent) {
-  const tfInstanceId = await getMaxTfInstanceId();
-  const expressionId = expressionIdFromTfInstanceId(tfInstanceId + 1); //+1 to generate the next tfId
+export async function createUniprodAccessionFile(htmlContent, tf_instance_id) {
+  const expressionId = expressionIdFromTfInstanceId(tf_instance_id); //+1 to generate the next tfId
 
   const res = await fetch("https://recollectf2.vercel.app/api/functions/create-expression-page", {
     method: "POST",

@@ -4,9 +4,10 @@ import { useCuration } from "../../context/CurationContext";
 import { dispatchWorkflow } from "../../utils/serverless";
 import { generateHTMLFromCurationContext } from "../../../../scripts/generateHtmlFromCurationInfo";
 import { createUniprodAccessionFile } from "../../utils/serverless";
+import { getTfInstanceFromUniAcc } from "../../../../src/db/queries/uniprodQueries";
+import { getMaxTfInstanceId } from "../../../../src/db/queries/uniprodQueries";
 
 var uniprodAccessionCode;
-var tfInstanceId;
 
 function esc(str) {
   return String(str ?? "").replace(/'/g, "''");
@@ -592,14 +593,19 @@ WHERE ${geneIdExpr} IS NOT NULL;
         step5Data,
         step6Data,
       });
-      
+
       const sqlString = buildFullSql();
 
       await dispatchWorkflow({
         inputs: { queries: sqlString },
       });
 
-      await createUniprodAccessionFile(htmlContent);
+      let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccessionCode) || null;
+
+      if (tf_instance_id == null) {
+        tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
+      }
+      await createUniprodAccessionFile(htmlContent, tf_instance_id);
 
       setStep7Data({
         revisionReason,
