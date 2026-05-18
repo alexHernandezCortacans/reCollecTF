@@ -9,7 +9,7 @@ on:
         description: "HTML content (base64 encoded)"
         required: true
       uniprot_accession:
-        description: "UniProt accession (e.g. Q9A724) — solo si es nuevo"
+        description: "UniProt accession (e.g. Q9A724)"
         required: false
 
 permissions:

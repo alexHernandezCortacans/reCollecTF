@@ -7,7 +7,7 @@ import { createUniprodAccessionFile } from "../../utils/serverless";
 import { getTfInstanceFromUniAcc } from "../../../../src/db/queries/uniprodQueries";
 import { getMaxTfInstanceId } from "../../../../src/db/queries/uniprodQueries";
 
-var uniprodAccessionCode;
+var uniprodAccession;
 
 function esc(str) {
   return String(str ?? "").replace(/'/g, "''");
@@ -129,7 +129,7 @@ export default function Step7CurationInfo() {
     const tfDesc = pickFirstNonEmpty(tf?.description, "", "");
 
     const uniAcc = pickFirstNonEmpty(firstAcc(uniprotList), tf?.uniprot_accession, tf?.uniprot, "");
-    uniprodAccessionCode = uniAcc;
+    uniprodAccession = uniAcc;
     
     const refAcc = pickFirstNonEmpty(firstAcc(refseqList), tf?.refseq_accession, tf?.refseq, "");
     const tfInstanceDesc = pickFirstNonEmpty(firstDesc(uniprotList), firstDesc(refseqList), tfDesc, tfName, "—");
@@ -600,12 +600,12 @@ WHERE ${geneIdExpr} IS NOT NULL;
         inputs: { queries: sqlString },
       });
 
-      let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccessionCode) || null;
+      let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccession) || null;
 
       if (tf_instance_id == null) {
         tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
       }
-      await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccessionCode);
+      await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccession);
 
       setStep7Data({
         revisionReason,
