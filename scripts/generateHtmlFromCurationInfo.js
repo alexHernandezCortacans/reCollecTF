@@ -67,6 +67,8 @@ export async function generateHTMLFromCurationContext({
 
   const tf_instance_id = await getTfInstanceFromUniAcc(uniAcc);
 
+  console.log(tf_instance_id);
+
   let result = [];
 
   if (tf_instance_id != null) {
@@ -133,30 +135,8 @@ export async function generateHTMLFromCurationContext({
           });
         }
       }
-    } else {
-      // Site sin genes regulados — una fila por técnica igualmente
-      for (const tech of siteTechniques.length ? siteTechniques : [{ technique_id: null, tech_name: "", EO_term: null }]) {
-        result.push({
-          uniprot_accession: uniAcc,
-          genome_accession,
-          TF_type,
-          TF_function,
-          annotated_seq,
-          start,
-          end,
-          strand,
-          pmid,
-          curation_id: nextCurationId,
-          technique_id: tech.technique_id,
-          tech_name: tech.tech_name,
-          EO_term: tech.EO_term,
-          gene_name: "",
-          locus_tag: "",
-          evidence_type,
-        });
-      }
-    }
+    } 
   }
-
+  
   return buildHTMLFromData(dataSV, result);
 }
