@@ -3,6 +3,7 @@
 import { buildHTMLFromData } from "../src/components/uniprod-tf-queries/GenerateDetailedView";
 import { getMaxCurationId } from "../src/db/queries/uniprodQueries";
 import { getSearchResult } from "../src/db/queries/search";
+import { geTfInstanceFromUniAcc } from "../src/db/queries/uniprodQueries";
 
 export function generateHTMLFromCurationContext({
   tf,
