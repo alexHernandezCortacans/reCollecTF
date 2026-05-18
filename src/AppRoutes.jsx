@@ -27,11 +27,7 @@ function AppRoutes() {
             </CurationProvider>
             }
           />
-          <Route path="/:expressionId" element={<DetailedView />} />
         </Route>
-
-        
-
       </Routes>
     </HashRouter>
   );

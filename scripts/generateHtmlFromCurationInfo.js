@@ -1,6 +1,7 @@
 // generateHTMLFromCurationData.js
 
 import { buildHTMLFromData } from "../src/components/uniprod-tf-queries/GenerateDetailedView";
+import { getMaxCurationId } from "../src/db/queries/uniprodQueries";
 
 export function generateHTMLFromCurationContext({
   tf,
@@ -13,6 +14,8 @@ export function generateHTMLFromCurationContext({
   step5Data,
   step6Data,
 }) {
+
+
   // --- helpers (mismos que Step7) ---
   function pickFirstNonEmpty(...vals) {
     for (const v of vals) {
@@ -60,7 +63,15 @@ export function generateHTMLFromCurationContext({
   const selectedBySite = step4Data?.selectedBySite || {};
   const techList = Array.isArray(techniques) ? techniques : [];
 
-  const result = [];
+  const tf_instance_id = await geTfInstanceFromUniAcc(uniAcc);
+
+  if (tf_instance_id != null) {
+    const result = await getSearchResult(tf_instance_id);
+  }
+  
+  if (result == null) {
+    const result = [];
+  }
 
   for (const site of sitesList) {
     const bundle = selectedBySite?.[site];
@@ -92,7 +103,7 @@ export function generateHTMLFromCurationContext({
         EO_term: eco !== "nan" ? eco : null,
       };
     });
-
+    const nextCurationId = await getMaxCurationId() + 1 || 0;
     // Una fila por gen regulado (igual que hace la query SQL con el JOIN)
     if (regsForSite.length > 0) {
       for (const g of regsForSite) {
@@ -112,7 +123,7 @@ export function generateHTMLFromCurationContext({
             end,
             strand,
             pmid,
-            curation_id: "pending",
+            curation_id: nextCurationId,
             technique_id: tech.technique_id,
             tech_name: tech.tech_name,
             EO_term: tech.EO_term,
@@ -135,7 +146,7 @@ export function generateHTMLFromCurationContext({
           end,
           strand,
           pmid,
-          curation_id: "pending",
+          curation_id: nextCurationId,
           technique_id: tech.technique_id,
           tech_name: tech.tech_name,
           EO_term: tech.EO_term,

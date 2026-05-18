@@ -93,4 +93,28 @@ export async function getMaxTfInstanceId() {
 
     return result[0]?.max_tf_instance_id ?? null;
 }
-    
+
+export async function getMaxCurationId() {
+
+    const query = `
+    SELECT MAX(curation_id) AS max_curation_id
+    FROM core_curation
+    `;
+
+    const result = await runQuery(query);
+
+    return result[0]?.max_curation_id ?? null;
+}
+
+export async function geTfInstanceFromUniAcc(uniAccess) {
+
+    const query = `
+    SELECT TF_instance_id 
+    FROM core_tfinstance
+    WHERE uniprot_accession = "${uniAccess}"
+    `;
+
+    const result = await runQuery(query);
+
+    return result[0]?.TF_instance_id ?? null;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-//Canviar en acabar
+// Canviar en acabar
 // const vercelUrl = "https://recollectf.vercel.app";
 const vercelUrl = "https://recollectf2.vercel.app";
 
