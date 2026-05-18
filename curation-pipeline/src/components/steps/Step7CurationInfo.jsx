@@ -592,6 +592,7 @@ WHERE ${geneIdExpr} IS NOT NULL;
         step5Data,
         step6Data,
       });
+      
       const sqlString = buildFullSql();
 
       await dispatchWorkflow({
