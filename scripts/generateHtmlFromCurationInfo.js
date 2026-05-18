@@ -103,6 +103,7 @@ export async function generateHTMLFromCurationContext({
       };
     });
     const nextCurationId = await getMaxCurationId() + 1 || 0;
+    alert 
     // Una fila por gen regulado (igual que hace la query SQL con el JOIN)
     if (regsForSite.length > 0) {
       for (const g of regsForSite) {

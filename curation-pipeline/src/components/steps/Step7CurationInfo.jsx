@@ -581,7 +581,7 @@ WHERE ${geneIdExpr} IS NOT NULL;
     setLoading(true);
 
     try {
-      const htmlContent = generateHTMLFromCurationContext({
+      const htmlContent = await generateHTMLFromCurationContext({
         tf,
         uniprotList,
         strainData,
