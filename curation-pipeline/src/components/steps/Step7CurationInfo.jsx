@@ -605,7 +605,7 @@ WHERE ${geneIdExpr} IS NOT NULL;
       if (tf_instance_id == null) {
         tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
       }
-      await createUniprodAccessionFile(htmlContent, tf_instance_id);
+      await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccessionCode);
 
       setStep7Data({
         revisionReason,

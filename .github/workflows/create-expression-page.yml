@@ -1,4 +1,3 @@
-# .github/workflows/create-expression-page.yml
 name: Create Expression Page
 on:
   workflow_dispatch:
@@ -9,6 +8,9 @@ on:
       html_content:
         description: "HTML content (base64 encoded)"
         required: true
+      uniprot_accession:
+        description: "UniProt accession (e.g. Q9A724) — solo si es nuevo"
+        required: false
 
 permissions:
   contents: write
@@ -38,6 +40,28 @@ jobs:
           mkdir -p "./public/$EXPR_ID"
           echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
 
+      - name: Update uniprot_dbxref.txt if new entry
+        run: |
+          set -euo pipefail
+          UNIPROT="${{ github.event.inputs.uniprot_accession }}"
+          DBXREF_FILE="public/uniprot_dbxref.txt"
+
+          # Solo actúa si se pasó uniprot_accession
+          if [ -z "$UNIPROT" ]; then
+            echo "No uniprot_accession provided, skipping dbxref update."
+            exit 0
+          fi
+
+          # Comprueba si el EXPR_ID ya está en el archivo
+          if grep -qF "$EXPR_ID" "$DBXREF_FILE"; then
+            echo "$EXPR_ID already in $DBXREF_FILE, skipping."
+            exit 0
+          fi
+
+          # Añade la nueva línea al final
+          echo "${UNIPROT}	${EXPR_ID}" >> "$DBXREF_FILE"
+          echo "Added: ${UNIPROT}	${EXPR_ID}"
+
       - name: Commit and push
         env:
           TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -47,6 +71,8 @@ jobs:
           git config user.email "github-actions@github.com"
 
           git add "./public/$EXPR_ID/index.html"
+          git add "public/uniprot_dbxref.txt"
+
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

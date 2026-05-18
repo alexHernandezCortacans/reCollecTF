@@ -118,3 +118,15 @@ export async function getTfInstanceFromUniAcc(uniAccess) {
 
     return result[0]?.TF_instance_id ?? null;
 }
+
+export async function getTFInstanceUniprot() {
+
+    const query = `
+    SELECT TF_instance_id, uniprot_accession
+    FROM core_tfinstance
+    `;
+
+    const result = await runQuery(query);
+
+    return result;
+}
