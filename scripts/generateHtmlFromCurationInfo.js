@@ -70,9 +70,20 @@ export async function generateHTMLFromCurationContext({
   console.log(tf_instance_id);
 
   let result = [];
+  let resultFromDB = [];
 
   if (tf_instance_id != null) {
-    result = await getSearchResult(tf_instance_id);
+    if (tf_instance_id != null) {
+      const raw = await getSearchResult(tf_instance_id) || [];
+      resultFromDB = raw.map(row => ({
+        ...row,
+        start: Number(row.start),
+        end: Number(row.end),
+        strand: String(row.strand),
+      }));
+    }
+
+    let result = [...resultFromDB];
   }
 
   for (const site of sitesList) {
