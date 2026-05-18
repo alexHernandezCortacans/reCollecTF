@@ -83,7 +83,7 @@ export async function generateHTMLFromCurationContext({
       }));
     }
 
-    let result = [...resultFromDB];
+    result = [...resultFromDB];
   }
 
   for (const site of sitesList) {
