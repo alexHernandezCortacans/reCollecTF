@@ -79,10 +79,9 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          
-          git fetch origin main
-          git rebase origin/main
 
+          git pull --rebase origin main || true
+          
           git add ./public/CollecTF.db.gz
           git add -u
 
