@@ -1,12 +1,13 @@
 // generateUniprotDbxref.js
 import fs from "fs";
 import path from "path";
-import initSqlJs from "sql.js";
-import { expressionIdFromTfInstanceId } from "../../utils/tfIdConverterToExpressionId";
-import { getTFInstanceUniprot } from "../../db/queries/uniprodQueries";
+import { expressionIdFromTfInstanceId } from "../../utils/tfIdConverterToExpressionId.js";
+import { getTFInstanceUniprot } from "../../db/queries/uniprodQueries.js";
 
 export async function generateUniprotDbXRef() {
-    const outputPath = "../../../public/static/uniprot_dbxref.txt";
+    const outputDir = path.resolve(process.cwd(), "public", "static");
+    const outputPath = path.join(outputDir, "uniprot_dbxref.txt");
+    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
     const rows = await getTFInstanceUniprot();
 
     const lines = rows.map((row) => {
@@ -16,6 +17,4 @@ export async function generateUniprotDbXRef() {
 
     fs.writeFileSync(outputPath, lines.join("\n") + "\n", "utf-8");
     console.log(`✅ Escrito ${lines.length} entradas en ${outputPath}`);
-
-    db.close();
 }

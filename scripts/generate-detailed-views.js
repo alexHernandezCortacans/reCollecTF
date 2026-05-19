@@ -36,7 +36,7 @@ async function main() {
   try {
     await generateUniprotDbXRef();
   } catch(error) {
-    console.log("Fallada generación de página de referencia Uniprod")
+    console.log("Error: ", error)
   }
 
   console.log(`\n ${count} páginas generadas en ${publicDir}`);
