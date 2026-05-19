@@ -32,14 +32,14 @@ export async function dispatchWorkflow(data) {
   return payload;
 }
 
-export async function createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccession) {
+export async function createUniprodAccessionFile(htmlContent, tf_instance_id, uniprotAccession) {
   const expressionId = expressionIdFromTfInstanceId(tf_instance_id); //+1 to generate the next tfId
 
   const res = await fetch("https://recollectf2.vercel.app/api/functions/create-expression-page", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ expressionId, htmlContent, uniprodAccession }),
+    body: JSON.stringify({ expressionId, htmlContent, uniprotAccession }),
   });
 
   const text = await res.text();
