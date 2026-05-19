@@ -580,8 +580,9 @@ WHERE ${geneIdExpr} IS NOT NULL;
   async function handleSubmit() {
     setMsg("");
     setLoading(true);
-
+    
     try {
+      const sqlString = buildFullSql();
       const htmlContent = await generateHTMLFromCurationContext({
         tf,
         uniprotList,
@@ -593,19 +594,21 @@ WHERE ${geneIdExpr} IS NOT NULL;
         step5Data,
         step6Data,
       });
-
-      const sqlString = buildFullSql();
-
+      
       await dispatchWorkflow({
         inputs: { queries: sqlString },
       });
 
-      let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccession) || null;
+      const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
+      
+      if(expressionInfo) {
+        let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccession) || null;
 
-      if (tf_instance_id == null) {
-        tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
+        if (tf_instance_id == null) {
+          tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
+        }
+        await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccession);
       }
-      await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccession);
 
       setStep7Data({
         revisionReason,

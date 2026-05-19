@@ -11,13 +11,13 @@ function expressionIdFromTfInstanceId(tfInstanceId) {
     .toString(16)
     .toUpperCase()
     .padStart(8, "0");
-
   return `EXPREG_${hex}0`;
 }
 
 async function main() {
   const tfIds = await getAllTfInstanceIds();
   let count = 0;
+  const successfulIds = new Set(); // Afegim els que han creat les pàgines correctament
 
   for (const tfId of tfIds) {
     const expressionId = expressionIdFromTfInstanceId(tfId);
@@ -26,6 +26,7 @@ async function main() {
       const expressionDir = path.join(publicDir, expressionId);
       if (!fs.existsSync(expressionDir)) fs.mkdirSync(expressionDir, { recursive: true });
       fs.writeFileSync(path.join(expressionDir, "index.html"), html, "utf-8");
+      successfulIds.add(expressionId);
       count++;
       console.log(`✅ ${expressionId}`);
     } catch (error) {
@@ -34,9 +35,9 @@ async function main() {
   }
 
   try {
-    await generateUniprotDbXRef();
-  } catch(error) {
-    console.log("Error: ", error)
+    await generateUniprotDbXRef(successfulIds);
+  } catch (error) {
+    console.log("Error: ", error);
   }
 
   console.log(`\n ${count} páginas generadas en ${publicDir}`);
