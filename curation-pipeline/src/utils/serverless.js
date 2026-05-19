@@ -39,7 +39,7 @@ export async function createUniprodAccessionFile(htmlContent, tf_instance_id, un
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ expressionId, htmlContent, uniprotAccession }),
+    body: JSON.stringify({ expressionId, htmlContent, uniprodAccession }),
   });
 
   const text = await res.text();
