@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HrpX - CollecTF</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      background-color: rgb(30, 30, 30);
+      font-family: Segoe UI, sans-serif;
+      color: rgb(245, 245, 245);
+    }
+
+    .btn {
+      cursor: pointer;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: rgb(51, 65, 85);
+      padding: 0.5rem 1rem;
+      color: rgb(245, 245, 245);
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background-color: rgb(30, 41, 59);
+    }
+
+    .text-accent {
+      color: rgb(79, 195, 247);
+    }
+
+    .bg-surface {
+      background-color: rgb(42, 42, 42);
+    }
+
+    .border-border {
+      border-color: rgb(68, 68, 68);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center bg-surface px-8 py-4 border-b border-border">
+    <a href="https://erilllab.github.io/reCollecTF/" 
+    class="text-5xl font-bold text-accent cursor-pointer hover:text-white no-underline">
+    CollecTF
+    </a>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-screen-xl mx-auto px-4 mt-6">
+
+    <div class="mb-6">
+      <b class="text-lg">HrpX</b>
+
+      <p class="mt-2 text-sm text-gray-300">
+        <a class="text-accent hover:underline"
+           href="https://www.uniprot.org/uniprotkb/Q3BW17/entry">
+          UniProtKB: Q3BW17
+        </a>
+        regulon and binding site collection of Xanthomonas campestris pv. vesicatoria str. 85-10
+      </p>
+    </div>
+
+    <!-- GUIDE -->
+    <p class="mb-4 text-sm text-gray-300">
+      For the selected transcription factor and species, the list of curated binding sites in the database are displayed below.
+      Gene regulation diagrams show
+      <span style="text-decoration: underline;">[binding sites]</span>,
+      <span style="color: #4CAF50; text-decoration: underline;">[positively-regulated genes]</span>,
+      <span style="color: #F44336; text-decoration: underline;">[negatively-regulated genes]</span>,
+      <span style="color: #FFEB3B; text-decoration: underline;">[both positively and negatively regulated genes]</span>,
+      <span style="color: #2196F3; text-decoration: underline;">[genes with unspecified type of regulation]</span>.
+    </p>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm table-fixed border-collapse">
+
+        <thead>
+          <tr class="bg-surface">
+            <th class="border border-gray-700 p-2">Genome</th>
+            <th class="border border-gray-700 p-2">TF</th>
+            <th class="border border-gray-700 p-2">TF conformation</th>
+            <th class="border border-gray-700 p-2">Site Sequence</th>
+            <th class="border border-gray-700 p-2">Site Location</th>
+            <th class="border border-gray-700 p-2">Experimental Techniques</th>
+            <th class="border border-gray-700 p-2">Gene Regulation</th>
+            <th class="border border-gray-700 p-2">Curation</th>
+            <th class="border border-gray-700 p-2">PMID</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCGGCGCGCGCGCCAGCTTCGT</td>
+        <td class="border p-2">+  [600440, 600464]</td>
+        <td class="border p-2">qRT-PCR [RNA] (ECO:0001808), Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">XCV0535 (XCV0535)</span>, </span><span><span style="color: #4CAF50;">XCV0536 (XCV0536)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCACACGCACCCTTGCATTCGC</td>
+        <td class="border p-2">+  [2894865, 2894889]</td>
+        <td class="border p-2">qRT-PCR [RNA] (ECO:0001808), Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">XCV2567 (XCV2567)</span>, </span><span><span style="color: #ffffff;">XCV2566 (XCV2566)</span>, </span><span><span style="color: #ffffff;">XCV2565 (XCV2565)</span>, </span><span><span style="color: #4CAF50;">XCV2568 (XCV2568)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCTTTGCATCGCTGCACTTCGT</td>
+        <td class="border p-2">+  [3103540, 3103564]</td>
+        <td class="border p-2">qRT-PCR [RNA] (ECO:0001808), Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">XCV2729 (XCV2729)</span>, </span><span><span style="color: #ffffff;">XCV2728 (XCV2728)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGGCCAAGCTTACGTCAACTCGC</td>
+        <td class="border p-2">+  [3895036, 3895060]</td>
+        <td class="border p-2">qRT-PCR [RNA] (ECO:0001808), Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">XCV3407 (XCV3407)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGTTTTTGGAGCGCCGCGTGCGG</td>
+        <td class="border p-2">+  [4351038, 4351062]</td>
+        <td class="border p-2">qRT-PCR [RNA] (ECO:0001808), Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">XCV3765 (XCV3765)</span>, </span><span><span style="color: #ffffff;">XCV3764 (XCV3764)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGTTTGCTGCGGCGGCGCTTCGT</td>
+        <td class="border p-2">+  [5101653, 5101677]</td>
+        <td class="border p-2">qRT-PCR [RNA] (ECO:0001808), Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #4CAF50;">XCV4424 (XCV4424)</span>, </span><span><span style="color: #ffffff;">XCV4425 (XCV4425)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCCAGCGAATTCCGATATTCGC</td>
+        <td class="border p-2">+  [477426, 477450]</td>
+        <td class="border p-2">Consensus search (ECO:0005624), DNA affinity purification (ECO:0005629)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">hrcU (XCV0426)</span>, </span><span><span style="color: #ffffff;">hrcV (XCV0425)</span>, </span><span><span style="color: #ffffff;">hpaC (XCV0424)</span>, </span><span><span style="color: #ffffff;">hrcQ (XCV0423)</span>, </span><span><span style="color: #ffffff;">hrcR (XCV0422)</span>, </span><span><span style="color: #ffffff;">hrcS (XCV0421)</span>, </span><span><span style="color: #ffffff;">hpaA (XCV0420)</span>, </span><span><span style="color: #ffffff;">hrcD (XCV0419)</span>, </span><span><span style="color: #ffffff;">hrpD6 (XCV0418)</span>, </span><span><span style="color: #ffffff;">hrpE (XCV0417)</span>, </span><span><span style="color: #ffffff;">hpaB (XCV0416)</span>, </span><span><span style="color: #ffffff;">hpaE (XCV0415)</span>, </span><span><span style="color: #ffffff;">hrpB1 (XCV0427)</span>, </span><span><span style="color: #ffffff;">hrpB2 (XCV0428)</span>, </span><span><span style="color: #ffffff;">hrcJ (XCV0429)</span>, </span><span><span style="color: #ffffff;">hrpB4 (XCV0430)</span>, </span><span><span style="color: #ffffff;">hrcL (XCV0431)</span>, </span><span><span style="color: #ffffff;">hrcN (XCV0432)</span>, </span><span><span style="color: #ffffff;">hrpB7 (XCV0433)</span>, </span><span><span style="color: #ffffff;">hrcT (XCV0434)</span>, </span><span><span style="color: #ffffff;">hrcC (XCV0435)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCCAGGCCATCCACACATTCGC</td>
+        <td class="border p-2">+  [477387, 477411]</td>
+        <td class="border p-2">Consensus search (ECO:0005624), DNA affinity purification (ECO:0005629)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">hrcU (XCV0426)</span>, </span><span><span style="color: #ffffff;">hrcV (XCV0425)</span>, </span><span><span style="color: #ffffff;">hpaC (XCV0424)</span>, </span><span><span style="color: #ffffff;">hrcQ (XCV0423)</span>, </span><span><span style="color: #ffffff;">hrcR (XCV0422)</span>, </span><span><span style="color: #ffffff;">hrcS (XCV0421)</span>, </span><span><span style="color: #ffffff;">hpaA (XCV0420)</span>, </span><span><span style="color: #ffffff;">hrcD (XCV0419)</span>, </span><span><span style="color: #ffffff;">hrpD6 (XCV0418)</span>, </span><span><span style="color: #ffffff;">hrpE (XCV0417)</span>, </span><span><span style="color: #ffffff;">hpaB (XCV0416)</span>, </span><span><span style="color: #ffffff;">hpaE (XCV0415)</span>, </span><span><span style="color: #ffffff;">hrpB1 (XCV0427)</span>, </span><span><span style="color: #ffffff;">hrpB2 (XCV0428)</span>, </span><span><span style="color: #ffffff;">hrcJ (XCV0429)</span>, </span><span><span style="color: #ffffff;">hrpB4 (XCV0430)</span>, </span><span><span style="color: #ffffff;">hrcL (XCV0431)</span>, </span><span><span style="color: #ffffff;">hrcN (XCV0432)</span>, </span><span><span style="color: #ffffff;">hrpB7 (XCV0433)</span>, </span><span><span style="color: #ffffff;">hrcT (XCV0434)</span>, </span><span><span style="color: #ffffff;">hrcC (XCV0435)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCCGGACCAGCTATCGCTTCGC</td>
+        <td class="border p-2">+  [473792, 473816]</td>
+        <td class="border p-2">Site directed mutagenesis (ECO:0005667), Consensus search (ECO:0005624), DNA affinity purification (ECO:0005629)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">hpaC (XCV0424)</span>, </span><span><span style="color: #ffffff;">hrcQ (XCV0423)</span>, </span><span><span style="color: #ffffff;">hrcR (XCV0422)</span>, </span><span><span style="color: #ffffff;">hrcS (XCV0421)</span>, </span><span><span style="color: #ffffff;">hpaA (XCV0420)</span>, </span><span><span style="color: #ffffff;">hrcD (XCV0419)</span>, </span><span><span style="color: #ffffff;">hrpD6 (XCV0418)</span>, </span><span><span style="color: #ffffff;">hrpE (XCV0417)</span>, </span><span><span style="color: #ffffff;">hpaB (XCV0416)</span>, </span><span><span style="color: #ffffff;">hpaE (XCV0415)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCCCATGACCATGCAGCTTCGC</td>
+        <td class="border p-2">+  [470895, 470919]</td>
+        <td class="border p-2">Consensus search (ECO:0005624), DNA affinity purification (ECO:0005629)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">hrcD (XCV0419)</span>, </span><span><span style="color: #ffffff;">hpaA (XCV0420)</span>, </span><span><span style="color: #ffffff;">hrpD6 (XCV0418)</span>, </span><span><span style="color: #ffffff;">hrpE (XCV0417)</span>, </span><span><span style="color: #ffffff;">hpaB (XCV0416)</span>, </span><span><span style="color: #ffffff;">hpaE (XCV0415)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+      <tr>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="https://www.ncbi.nlm.nih.gov/nuccore/NC_007508.1" target="_blank" rel="noopener noreferrer">NC_007508.1</a>
+        </td>
+        <td class="border p-2">
+          <a class="text-accent hover:underline" href="http://uniprot.org/uniprot/Q3BW17" target="_blank" rel="noopener noreferrer">Q3BW17</a>
+        </td>
+        <td class="border p-2">DIMER</td>
+        <td class="border p-2 break-words">TTCGCCAAAATAGTTCGTCGGCCAG</td>
+        <td class="border p-2">+  [464990, 465014]</td>
+        <td class="border p-2">Consensus search (ECO:0005624)</td>
+        <td class="border p-2"><span><span style="color: #ffffff;">hrpF (XCV0411)</span>, </span><span><span style="color: #ffffff;">XCV0410 (XCV0410)</span>, </span><span><span style="color: #ffffff;">hpaF (XCV0409)</span>, </span><span><span style="color: #ffffff;">hpaG (XCV0408)</span>, </span><span><span style="color: #ffffff;">XCV0407 (XCV0407)</span>, </span><span><span style="color: #ffffff;">XCV0412 (XCV0412)</span>, </span><span><span style="color: #ffffff;">XCV0413 (XCV0413)</span>, </span><span><span style="color: #ffffff;">xopF1 (XCV0414)</span></span></td>
+        <td class="border p-2">1127</td>
+        <td class="border p-2"><a class="text-accent hover:underline" href="https://pubmed.ncbi.nlm.nih.gov/16936021" target="_blank" rel="noopener noreferrer">16936021</a></td>
+      </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </main>
+
+</body>
+</html>
