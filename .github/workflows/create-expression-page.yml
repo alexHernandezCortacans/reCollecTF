@@ -71,7 +71,7 @@ jobs:
           git config user.email "github-actions@github.com"
 
           git add "./public/$EXPR_ID/index.html"
-          git add "public/uniprot_dbxref.txt"
+          git add "public/static/uniprot_dbxref.txt"
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
