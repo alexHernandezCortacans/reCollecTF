@@ -1,20 +1,16 @@
 name: Create Expression Page
-
 on:
   workflow_dispatch:
     inputs:
       expression_id:
         description: "Expression ID (e.g. EXPREG_000014f0)"
         required: true
-
       html_content:
         description: "HTML content (base64 encoded)"
         required: true
-
-      expression_info:
+      expressionInfo:
         description: "Boolean, true if curation contains experimentally verified data"
         required: true
-
       uniprot_accession:
         description: "UniProt accession (e.g. Q9A724)"
         required: false
@@ -25,7 +21,6 @@ permissions:
 jobs:
   create-page:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -35,71 +30,53 @@ jobs:
       - name: Validate expression_id
         run: |
           set -euo pipefail
-
           EXPR_ID="${{ github.event.inputs.expression_id }}"
-
           if ! echo "$EXPR_ID" | grep -qE '^EXPREG_[a-f0-9A-F]+$'; then
             echo "Invalid expression_id: $EXPR_ID"
             exit 1
           fi
-
           echo "EXPR_ID=$EXPR_ID" >> $GITHUB_ENV
-
-      - name: Decide workflow behavior
-        run: |
-          set -euo pipefail
-
-          DBXREF_FILE="public/static/uniprot_dbxref.txt"
-          EXPRESSION_INFO="${{ github.event.inputs.expression_info }}"
-
-          # Check whether EXPR_ID already exists
-          if grep -qF "$EXPR_ID" "$DBXREF_FILE"; then
-            echo "EXPR_EXISTS=true" >> $GITHUB_ENV
-            echo "EXPR_ID already exists."
-            exit 0
-          fi
-
-          # If EXPR_ID does not exist and expression_info is false, stop workflow
-          if [ "$EXPRESSION_INFO" != "true" ]; then
-            echo "EXPR_ID not found and expression_info is false. Nothing to do."
-            exit 0
-          fi
-
-          echo "EXPR_EXISTS=false" >> $GITHUB_ENV
 
       - name: Write HTML file
         run: |
           set -euo pipefail
-
           mkdir -p "./public/$EXPR_ID"
           echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
 
-      - name: Update uniprot_dbxref.txt if needed
+      - name: Update uniprot_dbxref.txt if new entry and expressionInfo is true
         run: |
           set -euo pipefail
-
-          DBXREF_FILE="public/static/uniprot_dbxref.txt"
           UNIPROT="${{ github.event.inputs.uniprot_accession }}"
+          EXPRESSION_INFO="${{ github.event.inputs.expressionInfo }}"
+          DBXREF_FILE="public/static/uniprot_dbxref.txt"
 
-          # Only add a new entry if EXPR_ID was not already present
-          if [ "$EXPR_EXISTS" = "false" ]; then
-            if [ -z "$UNIPROT" ]; then
-              echo "Missing uniprot_accession for new entry."
-              exit 0
-            fi
-
-            echo "${UNIPROT}	${EXPR_ID}" >> "$DBXREF_FILE"
-            echo "Added new dbxref entry."
-          else
-            echo "Skipping dbxref update."
+          # If EXPR_ID already exists in the dbxref file, skip update entirely
+          if grep -qF "$EXPR_ID" "$DBXREF_FILE"; then
+            echo "$EXPR_ID already in $DBXREF_FILE, skipping dbxref update."
+            exit 0
           fi
+
+          # EXPR_ID is new — only add entry if expressionInfo is true
+          if [ "$EXPRESSION_INFO" != "true" ]; then
+            echo "expressionInfo is not true, skipping dbxref update for new entry."
+            exit 0
+          fi
+
+          # Require uniprot_accession to add a new entry
+          if [ -z "$UNIPROT" ]; then
+            echo "No uniprot_accession provided, cannot add new entry to dbxref."
+            exit 1
+          fi
+
+          # Add new entry to dbxref file
+          echo "${UNIPROT}	${EXPR_ID}" >> "$DBXREF_FILE"
+          echo "Added new entry: ${UNIPROT}	${EXPR_ID}"
 
       - name: Commit and push
         env:
           TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
           set -euo pipefail
-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
@@ -112,7 +89,6 @@ jobs:
           fi
 
           git commit -m "Add expression page: $EXPR_ID"
-
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git pull --rebase origin main
           git push origin main
