@@ -601,14 +601,13 @@ WHERE ${geneIdExpr} IS NOT NULL;
 
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
       
-      if(expressionInfo) {
-        let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccession) || null;
+      let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccession) || null;
 
-        if (tf_instance_id == null) {
-          tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
-        }
-        await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccession);
+      if (tf_instance_id == null) {
+        tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
       }
+      
+      await createUniprodAccessionFile(htmlContent, tf_instance_id, uniprodAccession, expressionInfo);
 
       setStep7Data({
         revisionReason,

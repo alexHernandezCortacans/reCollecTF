@@ -41,7 +41,6 @@ export async function generateHTMLFromCurationContext({
     return 1;
   }
 
-  // --- dataSV (equivalente a getQuerySplitView) ---
   const uniAcc = pickFirstNonEmpty(firstAcc(uniprotList), tf?.uniprot_accession, "");
   const species = pickFirstNonEmpty(
     strainData?.organismTFBindingSites,
@@ -58,7 +57,6 @@ export async function generateHTMLFromCurationContext({
     },
   ];
 
-  // --- result (equivalente a getSearchResult) ---
   const pmid = pickFirstNonEmpty(publication?.pmid, "");
   const containsExpression = !!(strainData?.expressionInfo);
   const sitesList = step4Data?.sites || [];
@@ -104,7 +102,6 @@ export async function generateHTMLFromCurationContext({
     const genome_accession = hit.acc;
     const evidence_type = containsExpression ? "exp_verified" : "inferred";
 
-    // Técnicas del site
     const techMap = s5?.techniques || {};
     const selectedECOs = Object.keys(techMap).filter((eco) => techMap[eco] === true);
     const siteTechniques = selectedECOs.map((eco) => {
@@ -119,14 +116,13 @@ export async function generateHTMLFromCurationContext({
     });
     const nextCurationId = await getMaxCurationId() + 1 || 0;
     alert 
-    // Una fila por gen regulado (igual que hace la query SQL con el JOIN)
+
     if (regsForSite.length > 0) {
       for (const g of regsForSite) {
         const gene_name = pickFirstNonEmpty(g?.geneLabel, g?.gene, g?.name, "");
         const locus_tag = pickFirstNonEmpty(g?.locus, "");
         if (!gene_name && !locus_tag) continue;
 
-        // Una fila por técnica (igual que el JOIN en SQL)
         for (const tech of siteTechniques.length ? siteTechniques : [{ technique_id: null, tech_name: "", EO_term: null }]) {
           result.push({
             uniprot_accession: uniAcc,

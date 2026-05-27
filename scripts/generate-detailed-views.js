@@ -1,4 +1,6 @@
 import fs from "fs";
+import readline from "readline";
+import { tfInstanceFromExpression } from "../src/utils/tfIdConverterToExpressionId.js"; 
 import path from "path";
 import { generateDetailedViewHTML } from "../src/components/uniprod-tf-queries/GenerateDetailedView.js";
 import { getAllTfInstanceIds } from "../src/db/queries/uniprodQueries.js";
@@ -14,8 +16,32 @@ function expressionIdFromTfInstanceId(tfInstanceId) {
   return `EXPREG_${hex}0`;
 }
 
+async function getTfFromXRef() {
+  const results = [];
+
+  const rl = readline.createInterface({
+    input: fs.createReadStream('public/static/uniprot_dbxref_2_col.txt'),
+    terminal: false
+  });
+
+  return new Promise((resolve, reject) => {
+    rl.on('line', (line) => {
+      if (line.trim() !== '') {
+        results.push(tfInstanceFromExpression(line.trim()));
+      }
+    });
+
+    rl.on('close', () => {
+      console.log(results);
+      resolve(results);
+    });
+
+    rl.on('error', reject);
+  });
+}
+
 async function main() {
-  const tfIds = await getAllTfInstanceIds();
+  const tfIds = await getTfFromXRef();
   let count = 0;
   const successfulIds = new Set(); // Afegim els que han creat les pàgines correctament
 
@@ -32,12 +58,6 @@ async function main() {
     } catch (error) {
       console.log(`⚠️  ${expressionId}: ${error.message}`);
     }
-  }
-
-  try {
-    await generateUniprotDbXRef(successfulIds);
-  } catch (error) {
-    console.log("Error: ", error);
   }
 
   console.log(`\n ${count} páginas generadas en ${publicDir}`);
