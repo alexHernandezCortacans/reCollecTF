@@ -10,25 +10,25 @@ const HomePage = () => {
         {
         id: 1,
         title: "STEP 1 - Select Transcription Factors",
-        image: "/reCollecTF/assets/step-1-collectf.jpg",
+        image: "/assets/step-1-collectf.jpg",
         number: "01"
         },
         {
         id: 2,
         title: "STEP 2 - Select Species",
-        image: "/reCollecTF/assets/step-2-collectf.jpg",
+        image: "/assets/step-2-collectf.jpg",
         number: "02"
         },
         {
         id: 3,
         title: "STEP 3 - Choose Experimental Techniques",
-        image: "/reCollecTF/assets/step-3-collectf.jpg",
+        image: "/assets/step-3-collectf.jpg",
         number: "03"
         },
         {
         id: 4,
         title: "RESULT - Get Your Data",
-        image: "/reCollecTF/assets/step-4-collectf.jpg",
+        image: "/assets/step-4-collectf.jpg",
         number: "04"
         }
     ];
