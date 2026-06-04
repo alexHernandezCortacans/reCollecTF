@@ -59,7 +59,7 @@ jobs:
           # EXPR_ID is new — only add entry if expressionInfo is true
           if [ "$EXPRESSION_INFO" != "true" ]; then
             echo "expressionInfo is not true, skipping dbxref update for new entry."
-            exit 0
+            exit 0  
           fi
 
           # Require uniprot_accession to add a new entry

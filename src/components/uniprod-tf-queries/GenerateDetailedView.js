@@ -146,7 +146,7 @@ export function buildHTMLFromData(dataSV, result) {
 
   <!-- HEADER -->
   <header class="flex justify-between items-center bg-surface px-8 py-4 border-b border-border">
-    <a href="https://erilllab.github.io/reCollecTF/" 
+    <a href="https://collectf.org/" 
     class="text-5xl font-bold text-accent cursor-pointer hover:text-white no-underline">
     CollecTF
     </a>

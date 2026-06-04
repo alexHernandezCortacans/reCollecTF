@@ -1,7 +1,6 @@
 // src/utils/serverless.js
-// Canviar a original en acabar
-//const dispatchUrl = "https://recollectf.vercel.app/api/functions/send-form.ts";
-const dispatchUrl = "https://recollectf2.vercel.app/api/functions/send-form.ts";
+
+const dispatchUrl = "https://recollectf.vercel.app/api/functions/send-form.ts";
 import { getMaxTfInstanceId } from "../../../src/db/queries/uniprodQueries";
 import { expressionIdFromTfInstanceId } from "../../../src/utils/tfIdConverterToExpressionId";
 
@@ -37,7 +36,7 @@ export async function dispatchWorkflow(data) {
 export async function createUniprodAccessionFile(htmlContent, tf_instance_id, uniprotAccession, expressionInfo) {
   const expressionId = expressionIdFromTfInstanceId(tf_instance_id); //+1 to generate the next tfId
 
-  const res = await fetch("https://recollectf2.vercel.app/api/functions/create-expression-page", {
+  const res = await fetch("https://recollectf.vercel.app/api/functions/create-expression-page", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

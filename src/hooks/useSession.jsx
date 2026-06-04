@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
-// Canviar en acabar
-// const vercelUrl = "https://recollectf.vercel.app";
-const vercelUrl = "https://recollectf2.vercel.app";
+const vercelUrl = "https://recollectf.vercel.app";
 
 
 // En local (Vite), import.meta.env.DEV === true

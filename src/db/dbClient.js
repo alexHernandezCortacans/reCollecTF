@@ -52,7 +52,7 @@ export const dbWorkerPromise = isNode
           from: "inline",
           config: {
             serverMode: "full",
-            url: "/reCollecTF/CollecTF.db.gz",
+            url: "/CollecTF.db.gz",
             requestChunkSize: 4096,
           },
         },

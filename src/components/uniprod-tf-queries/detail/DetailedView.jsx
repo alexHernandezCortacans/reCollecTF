@@ -50,7 +50,7 @@ const { expressionId } = useParams();
     <>
       <header className="flex justify-between items-center bg-surface px-8 py-4 border-b border-border">
         <h1 className="text-5xl font-bold text-accent cursor-pointer hover:text-text" onClick={handleLogoClick}>
-          <Link className="text-accent hover:underline" to="https://erilllab.github.io/reCollecTF/">CollecTF</Link>
+          <Link className="text-accent hover:underline" to="https://collectf.org/">CollecTF</Link>
         </h1>
       </header> <br/> <br/>
       <main>
