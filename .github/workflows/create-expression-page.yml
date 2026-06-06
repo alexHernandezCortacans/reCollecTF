@@ -27,48 +27,36 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Validate expression_id
-        run: |
-          set -euo pipefail
-          EXPR_ID="${{ github.event.inputs.expression_id }}"
-          if ! echo "$EXPR_ID" | grep -qE '^EXPREG_[a-f0-9A-F]+$'; then
-            echo "Invalid expression_id: $EXPR_ID"
-            exit 1
-          fi
-          echo "EXPR_ID=$EXPR_ID" >> $GITHUB_ENV
-
-      - name: Write HTML file
-        run: |
-          set -euo pipefail
-          mkdir -p "./public/$EXPR_ID"
-          echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
-
-      - name: Update uniprot_dbxref.txt if new entry and expressionInfo is true
+      - name: Conditional EXPR_ID/index.html creation and dbxref.txt updating
         run: |
           set -euo pipefail
           UNIPROT="${{ github.event.inputs.uniprot_accession }}"
           EXPRESSION_INFO="${{ github.event.inputs.expressionInfo }}"
           DBXREF_FILE="public/static/uniprot_dbxref.txt"
 
-          # If EXPR_ID already exists in the dbxref file, skip update entirely
+          # If EXPR_ID already exists in the dbxref file, skip update dbxref.txt, create index.html
           if grep -qF "$EXPR_ID" "$DBXREF_FILE"; then
             echo "$EXPR_ID already in $DBXREF_FILE, skipping dbxref update."
+            mkdir -p "./public/$EXPR_ID"
+            echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
             exit 0
           fi
 
           # EXPR_ID is new — only add entry if expressionInfo is true
           if [ "$EXPRESSION_INFO" != "true" ]; then
             echo "expressionInfo is not true, skipping dbxref update for new entry."
-            exit 0  
+            exit 0
           fi
 
-          # Require uniprot_accession to add a new entry
+          # If Uniprot not defined error (exit 1).
           if [ -z "$UNIPROT" ]; then
             echo "No uniprot_accession provided, cannot add new entry to dbxref."
             exit 1
           fi
 
-          # Add new entry to dbxref file
+          # If EXPR_ID not in dbxref and EXPRESSION_INFO true add new entry to dbxref file and create index.html
+          mkdir -p "./public/$EXPR_ID"
+          echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
           echo "${UNIPROT}	${EXPR_ID}" >> "$DBXREF_FILE"
           echo "Added new entry: ${UNIPROT}	${EXPR_ID}"
 
