@@ -12,7 +12,7 @@ import Step6GeneRegulation from "./components/steps/Step6GeneRegulation";
 import Step7CurationInfo from "./components/steps/Step7CurationInfo";
 
 
-export default function App() {
+export default function CurationPipeline() {
   const { currentStep } = useCuration();
 
   return (

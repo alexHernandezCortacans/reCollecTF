@@ -7,8 +7,8 @@ import SearchPage from "./pages/Search/SearchPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useUser } from "@/contexts/UserContext";
 import "../curation-pipeline/src/index.css";
-import CurationPipelineApp from "../curation-pipeline/src/App.jsx";
-import { CurationProvider } from "../curation-pipeline/src/context/CurationContext"; 
+import CurationPipeline from "./pages/CurationPipeline.jsx";
+import { CurationProvider } from "./contexts/CurationContext.jsx";
 import DetailedView from "./components/uniprod-tf-queries/detail/DetailedView.jsx";
 
 function AppRoutes() {
@@ -23,7 +23,7 @@ function AppRoutes() {
           path="curation-pipeline/*"
           element={
             <CurationProvider>
-              <CurationPipelineApp />
+              <CurationPipeline />
             </CurationProvider>
             }
           />
