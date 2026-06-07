@@ -1,6 +1,6 @@
 // src/components/steps/Step5SiteAnnotation.jsx
 import { useEffect, useMemo, useState } from "react";
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
 
 // Per normalitzar techniques (Step3 pot guardar string o objecte)
 function normalizeTechniques(techniques) {

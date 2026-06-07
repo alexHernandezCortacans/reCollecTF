@@ -1,11 +1,11 @@
 // src/components/steps/Step7CurationInfo.jsx
 import { useMemo, useState } from "react";
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
 import { dispatchAndCreate, dispatchWorkflowPipe } from "../../utils/serverless";
-import { generateHTMLFromCurationContext } from "../../../../scripts/generateHtmlFromCurationInfo";
+import { generateHTMLFromCurationContext } from "../../../scripts/generateHtmlFromCurationInfo";
 import { createUniprodAccessionFile } from "../../utils/serverless";
-import { getTfInstanceFromUniAcc } from "../../../../src/db/queries/uniprodQueries";
-import { getMaxTfInstanceId } from "../../../../src/db/queries/uniprodQueries";
+import { getTfInstanceFromUniAcc } from "../../db/queries/uniprodQueries";
+import { getMaxTfInstanceId } from "../../db/queries/uniprodQueries";
 
 var uniprodAccession;
 

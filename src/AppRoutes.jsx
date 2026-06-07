@@ -1,12 +1,9 @@
-import "../curation-pipeline/src/index.css";
-
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/Search/SearchPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useUser } from "@/contexts/UserContext";
-import "../curation-pipeline/src/index.css";
 import CurationPipeline from "./pages/CurationPipeline.jsx";
 import { CurationProvider } from "./contexts/CurationContext.jsx";
 import DetailedView from "./components/uniprod-tf-queries/detail/DetailedView.jsx";

@@ -1,7 +1,7 @@
 // src/components/steps/Step3ExperimentalMethods.jsx
 import { useEffect, useState } from "react";
-import { runQuery } from "../../db/queryExecutor";
-import { useCuration } from "../../context/CurationContext";
+import runQuery from "../../db/queryExecutor";
+import { useCuration } from "../../contexts/CurationContext";
 
 const QUICKGO_BASE = "https://www.ebi.ac.uk/QuickGO/services/ontology/eco/terms/";
 const PROXY = "https://corsproxy.io/?";

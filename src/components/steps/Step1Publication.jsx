@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
 
 const PROXY = "https://corsproxy.io/?";
 const BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { runQuery } from "../../db/queryExecutor";
-import { useCuration } from "../../context/CurationContext";
+import runQuery from "../../db/queryExecutor";
+import { useCuration } from "../../contexts/CurationContext";
 
 const ENTREZ_BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 const UNIPROT_BASE = "https://rest.uniprot.org/uniprotkb";

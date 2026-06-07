@@ -1,6 +1,6 @@
 // src/components/steps/Step6GeneRegulation.jsx
 import { useEffect, useMemo, useState } from "react";
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
 
 function distIntervals(aStart, aEnd, bStart, bEnd) {
   return Math.max(Number(aStart), Number(bStart)) - Math.min(Number(aEnd), Number(bEnd));

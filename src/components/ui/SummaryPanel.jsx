@@ -1,5 +1,5 @@
 // src/components/ui/SummaryPanel.jsx
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
 
 export default function SummaryPanel() {
   const {

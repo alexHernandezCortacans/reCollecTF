@@ -1,7 +1,7 @@
 const dispatchUrl = "https://recollectf2.vercel.app/api/functions/send-form.ts" //  "http://localhost:3000/api/auth/functions/send-form.ts"
 const BASE_URL = "https://recollectf2.vercel.app/api/functions/"
-import { getMaxTfInstanceId } from "../../../src/db/queries/uniprodQueries";
-import { expressionIdFromTfInstanceId } from "../../../src/utils/tfIdConverterToExpressionId";
+import { getMaxTfInstanceId } from "../db/queries/uniprodQueries";
+import { expressionIdFromTfInstanceId } from "../../src/utils/tfIdConverterToExpressionId";
 
 export async function dispatchWorkflow(data) {
 

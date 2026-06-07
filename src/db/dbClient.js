@@ -1,10 +1,11 @@
-import sqljsHttpvfs from "sql.js-httpvfs";
-const { createDbWorker } = sqljsHttpvfs.default || sqljsHttpvfs;
+import { createDbWorker } from "sql.js-httpvfs";
 
 const isNode = typeof Worker === "undefined";
 
-const workerUrl = new URL("sql.js-httpvfs/dist/sqlite.worker.js", import.meta.url).toString();
-const wasmUrl = new URL("sql.js-httpvfs/dist/sql-wasm.wasm", import.meta.url).toString();
+// Use Vite base so files in `public/` are resolved both in dev and production
+const base = import.meta.env && import.meta.env.BASE_URL ? import.meta.env.BASE_URL : "/";
+const workerUrl = `${base}sqlite.worker.js`;
+const wasmUrl = `${base}sql-wasm.wasm`;
 
 function runSqlJsQuery(db, sql, params = []) {
   const stmt = db.prepare(sql);
@@ -52,7 +53,7 @@ export const dbWorkerPromise = isNode
           from: "inline",
           config: {
             serverMode: "full",
-            url: "/reCollecTF/CollecTF.db.gz",
+            url: `${base}CollecTF.db.gz`,
             requestChunkSize: 4096,
           },
         },

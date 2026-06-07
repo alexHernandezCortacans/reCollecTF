@@ -1,6 +1,7 @@
 // src/components/steps/Step4ReportedSites.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
+import runQuery from "../../db/queryExecutor";
 import genbankParser from "genbank-parser";
 
 // Seq
