@@ -1,6 +1,6 @@
 // src/utils/serverless.js
 
-const dispatchUrl = "https://recollectf.vercel.app/api/functions/send-form.ts";
+const dispatchUrl = "https://recollectf2.vercel.app/api/functions/send-form.ts";
 import { getMaxTfInstanceId } from "../../../src/db/queries/uniprodQueries";
 import { expressionIdFromTfInstanceId } from "../../../src/utils/tfIdConverterToExpressionId";
 

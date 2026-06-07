@@ -41,6 +41,8 @@ jobs:
         run: |
           set -euo pipefail
           test -f ./public/CollecTF.db.gz
+
+          # Queremos un archivo sqlite plano en ./public/CollecTF.db
           if gzip -t ./public/CollecTF.db.gz 2>/dev/null; then
             echo "DB is valid gzip, unzipping to plain sqlite..."
             gunzip -c ./public/CollecTF.db.gz > ./public/CollecTF.db
@@ -48,6 +50,8 @@ jobs:
             echo "DB is NOT gzip. Treating ./public/CollecTF.db.gz as plain sqlite..."
             cp ./public/CollecTF.db.gz ./public/CollecTF.db
           fi
+
+          # (Opcional) sanity check: sqlite header
           head -c 16 ./public/CollecTF.db | strings || true
 
       - name: Run SQL from file
@@ -58,6 +62,8 @@ jobs:
 
       - name: Store updated DB as .gz filename (but keep it plain sqlite)
         run: |
+          # Tu front espera CollecTF.db.gz, pero lo quiere como sqlite directo.
+          # Por eso NO comprimimos: renombramos el sqlite plano al nombre .gz.
           set -euo pipefail
           mv -f ./public/CollecTF.db ./public/CollecTF.db.gz
 

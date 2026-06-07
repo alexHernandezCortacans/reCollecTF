@@ -1,6 +1,6 @@
 //Component principal que mostra per pantalla el necessari segons on estem.
 
-import { useCuration } from "./context/CurationContext";
+import { useCuration } from "../contexts/CurationContext";
 import StepNavigation from "./components/ui/StepNavigation"; //Component que pinta la barra dels passos
 import Step1Publicacio from "./components/steps/Step1Publication";
 import Step2GenomeTF from "./components/steps/Step2GenomeTF";
