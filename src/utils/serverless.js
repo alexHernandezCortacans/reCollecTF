@@ -79,23 +79,17 @@ export async function createUniprodAccessionFile(htmlContent, tf_instance_id, un
 export async function dispatchAndCreate(data, htmlContent, tf_instance_id, uniprotAccession, expressionInfo) {
   const expressionId = expressionIdFromTfInstanceId(tf_instance_id);
 
-  console.log(
-    JSON.stringify({
+  const res = await fetch("https://recollectf2.vercel.app/api/functions/dispatch-and-create", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
       inputs: data.inputs,
       expressionId,
       htmlContent,
       expressionInfo,
       uniprotAccession,
-    }, null, 2)
-  );
-
-  console.log(JSON.stringify(data, null, 2));
-
-  const res = await fetch("https://recollectf2.vercel.app/api/functions/dispatch-and-create", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ inputs: data.inputs, expressionId, htmlContent, expressionInfo, uniprotAccession }),
+    }),
   });
 
   const text = await res.text();
