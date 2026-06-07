@@ -1,4 +1,5 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
+import "./index.css";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/Search/SearchPage";
