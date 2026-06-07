@@ -1,15 +1,15 @@
 //Component principal que mostra per pantalla el necessari segons on estem.
 
 import { useCuration } from "../contexts/CurationContext";
-import StepNavigation from "./components/ui/StepNavigation"; //Component que pinta la barra dels passos
-import Step1Publicacio from "./components/steps/Step1Publication";
-import Step2GenomeTF from "./components/steps/Step2GenomeTF";
-import Step3ExperimentalMethods from "./components/steps/Step3ExperimentalMethods";
-import SummaryPanel from "./components/ui/SummaryPanel";
-import Step4ReportedSites from "./components/steps/Step4ReportedSites";
-import Step5SiteAnnotation from "./components/steps/Step5SiteAnnotation";
-import Step6GeneRegulation from "./components/steps/Step6GeneRegulation";
-import Step7CurationInfo from "./components/steps/Step7CurationInfo";
+import StepNavigation from "../components/ui/StepNavigation"
+import Step1Publicacio from "../components/steps/Step1Publication";
+import Step2GenomeTF from "../components/steps/Step2GenomeTF";
+import Step3ExperimentalMethods from "../components/steps/Step3ExperimentalMethods";
+import SummaryPanel from "../components/ui/SummaryPanel";
+import Step4ReportedSites from "../components/steps/Step4ReportedSites";
+import Step5SiteAnnotation from "../components/steps/Step5SiteAnnotation";
+import Step6GeneRegulation from "../components/steps/Step6GeneRegulation";
+import Step7CurationInfo from "../components/steps/Step7CurationInfo";
 
 
 export default function CurationPipeline() {
