@@ -1,6 +1,6 @@
 //Mostra una barra amb els passos del pipeline
 
-import { useCuration } from "../../context/CurationContext";
+import { useCuration } from "../../contexts/CurationContext";
 
 export default function StepNavigation() {
   const { currentStep, goToStep } = useCuration();
