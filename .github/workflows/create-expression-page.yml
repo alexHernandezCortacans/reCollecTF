@@ -67,6 +67,8 @@ jobs:
           TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
           set -euo pipefail
+          EXPR_ID="${{ inputs.expression_id }}"
+          
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
