@@ -29,9 +29,11 @@ jobs:
 
       - name: Conditional EXPR_ID/index.html creation and dbxref.txt updating
         run: |
+        
           set -euo pipefail
-          UNIPROT="${{ github.event.inputs.uniprot_accession }}"
-          EXPRESSION_INFO="${{ github.event.inputs.expressionInfo }}"
+          EXPR_ID="${{ inputs.expression_id }}"
+          UNIPROT="${{ inputs.uniprot_accession }}"
+          EXPRESSION_INFO="${{ inputs.expressionInfo }}"
           DBXREF_FILE="public/static/uniprot_dbxref.txt"
 
           # If EXPR_ID already exists in the dbxref file, skip update dbxref.txt, create index.html
