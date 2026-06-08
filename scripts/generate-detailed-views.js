@@ -4,8 +4,6 @@ import { tfInstanceFromExpression } from "../src/utils/tfIdConverterToExpression
 import path from "path";
 import { generateDetailedViewHTML } from "../src/components/uniprot-tf-queries/GenerateDetailedView.js";
 import { getAllTfInstanceIds } from "../src/db/queries/uniprotQueries.js";
-import { generateUniprotDbXRef } from "../src/components/uniprot-tf-queries/uniprotdbxrefGenerator.js";
-
 
 // This script is intended to be used ONLY by being called with "npm run generate-reports" profile,
 // "expregFilePath" is a file with a single column with an "EXPREG_XXXXXXX0" format id on each row

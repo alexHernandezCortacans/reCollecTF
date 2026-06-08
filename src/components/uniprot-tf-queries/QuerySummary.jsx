@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import { getQueryDataSummary } from "../../db/queries/uniprotQueries";
 import { getQueryDataSummaryGenome } from "../../db/queries/uniprotQueries";
 
+
+//This component can be used as an alternative landing page
+// it intends to copy the original collecTF landing page
+// To make this componens usable you only need to make a random EXPREG_ id 
+// get selected to use on the Detail page. ;)
 export default function QuerySummary() {
   const { expressionId } = useParams();
   const navigate = useNavigate();
