@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Result from "./common/Result";
 import { getSearchResult } from "../../../db/queries/search";
-import { getQuerySplitView } from "../../../db/queries/uniprodQueries";
+import { getQuerySplitView } from "../../../db/queries/uniprotQueries";
 //expressionId
 export default function DetailedView({  }) {
   const navigate = useNavigate();

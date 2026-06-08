@@ -1,9 +1,9 @@
 // generateHTMLFromCurationData.js
 
-import { buildHTMLFromData } from "../src/components/uniprod-tf-queries/GenerateDetailedView";
-import { getMaxCurationId } from "../src/db/queries/uniprodQueries";
+import { buildHTMLFromData } from "../src/components/uniprot-tf-queries/GenerateDetailedView";
+import { getMaxCurationId } from "../src/db/queries/uniprotQueries";
 import { getSearchResult } from "../src/db/queries/search";
-import { getTfInstanceFromUniAcc } from "../src/db/queries/uniprodQueries";
+import { getTfInstanceFromUniAcc } from "../src/db/queries/uniprotQueries";
 
 export async function generateHTMLFromCurationContext({
   tf,

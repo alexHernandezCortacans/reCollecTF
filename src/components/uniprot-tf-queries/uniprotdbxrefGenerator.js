@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { expressionIdFromTfInstanceId } from "../../utils/tfIdConverterToExpressionId.js";
-import { getTFInstanceUniprot } from "../../db/queries/uniprodQueries.js";
+import { getTFInstanceUniprot } from "../../db/queries/uniprotQueries.js";
 
 export async function generateUniprotDbXRef(successfulIds = null) {
   const outputDir = path.resolve(process.cwd(), "public", "static");

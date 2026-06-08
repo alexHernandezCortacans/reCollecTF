@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getQuerySequence } from "../../../../db/queries/uniprodQueries";
+import { getQuerySequence } from "../../../../db/queries/uniprotQueries";
 
 export default function BindingSites({tf_instance_id}) {
   const [error, setError] = useState(null);

@@ -3,11 +3,11 @@ import { useMemo, useState } from "react";
 import { useCuration } from "../../contexts/CurationContext";
 import { dispatchAndCreate, dispatchWorkflowPipe } from "../../utils/serverless";
 import { generateHTMLFromCurationContext } from "../../../scripts/generateHtmlFromCurationInfo";
-import { createUniprodAccessionFile } from "../../utils/serverless";
-import { getTfInstanceFromUniAcc } from "../../db/queries/uniprodQueries";
-import { getMaxTfInstanceId } from "../../db/queries/uniprodQueries";
+import { createUniprotAccessionFile } from "../../utils/serverless";
+import { getTfInstanceFromUniAcc } from "../../db/queries/uniprotQueries";
+import { getMaxTfInstanceId } from "../../db/queries/uniprotQueries";
 
-var uniprodAccession;
+var uniprotAccession;
 
 function esc(str) {
   return String(str ?? "").replace(/'/g, "''");
@@ -129,7 +129,7 @@ export default function Step7CurationInfo() {
     const tfDesc = pickFirstNonEmpty(tf?.description, "", "");
 
     const uniAcc = pickFirstNonEmpty(firstAcc(uniprotList), tf?.uniprot_accession, tf?.uniprot, "");
-    uniprodAccession = uniAcc;
+    uniprotAccession = uniAcc;
     
     const refAcc = pickFirstNonEmpty(firstAcc(refseqList), tf?.refseq_accession, tf?.refseq, "");
     const tfInstanceDesc = pickFirstNonEmpty(firstDesc(uniprotList), firstDesc(refseqList), tfDesc, tfName, "—");
@@ -597,10 +597,10 @@ WHERE ${geneIdExpr} IS NOT NULL;
       
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
       
-      let tf_instance_id = await getTfInstanceFromUniAcc(uniprodAccession) || null;
+      let tf_instance_id = await getTfInstanceFromUniAcc(uniprotAccession) || null;
 
       if (tf_instance_id == null) {
-        tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprodAccess a BD
+        tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprotAccess a BD
       }
       
       // calls vercel to dispatch the curation and creation of the static file
@@ -608,7 +608,7 @@ WHERE ${geneIdExpr} IS NOT NULL;
         { inputs: { queries: sqlString } },
         htmlContent,
         tf_instance_id,
-        uniprodAccession,
+        uniprotAccession,
         expressionInfo
       );
       

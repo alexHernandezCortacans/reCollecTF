@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import BindingSites from "./common/BindingSites";
-import { getQuerySplitView } from "../../../db/queries/uniprodQueries";
+import { getQuerySplitView } from "../../../db/queries/uniprotQueries";
 import DetailedView from "./DetailedView";
 
 export default function SplitView({tf_instance_id}) {

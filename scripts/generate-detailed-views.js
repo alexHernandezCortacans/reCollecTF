@@ -2,9 +2,9 @@ import fs from "fs";
 import readline from "readline";
 import { tfInstanceFromExpression } from "../src/utils/tfIdConverterToExpressionId.js"; 
 import path from "path";
-import { generateDetailedViewHTML } from "../src/components/uniprod-tf-queries/GenerateDetailedView.js";
-import { getAllTfInstanceIds } from "../src/db/queries/uniprodQueries.js";
-import { generateUniprotDbXRef } from "../src/components/uniprod-tf-queries/uniprodbxrefGenerator.js";
+import { generateDetailedViewHTML } from "../src/components/uniprot-tf-queries/GenerateDetailedView.js";
+import { getAllTfInstanceIds } from "../src/db/queries/uniprotQueries.js";
+import { generateUniprotDbXRef } from "../src/components/uniprot-tf-queries/uniprotdbxrefGenerator.js";
 
 
 // This script is intended to be used ONLY by being called with "npm run generate-reports" profile,

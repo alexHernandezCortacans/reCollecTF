@@ -1,6 +1,6 @@
 // generateDetailedViewHTML.js
 import { getSearchResult } from "../../db/queries/search.js";
-import { getQuerySplitView } from "../../db/queries/uniprodQueries.js";
+import { getQuerySplitView } from "../../db/queries/uniprotQueries.js";
 
 const regColors = {
   "ACT":  "#4CAF50",

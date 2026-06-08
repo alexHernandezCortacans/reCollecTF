@@ -7,7 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useUser } from "@/contexts/UserContext";
 import CurationPipeline from "./pages/CurationPipeline.jsx";
 import { CurationProvider } from "./contexts/CurationContext.jsx";
-import DetailedView from "./components/uniprod-tf-queries/detail/DetailedView.jsx";
+import DetailedView from "./components/uniprot-tf-queries/detail/DetailedView.jsx";
 
 function AppRoutes() {
   const { userStatus } = useUser();

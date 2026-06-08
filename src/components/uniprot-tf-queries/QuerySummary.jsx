@@ -1,7 +1,7 @@
 import { useParams, useNavigate, Route, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getQueryDataSummary } from "../../db/queries/uniprodQueries";
-import { getQueryDataSummaryGenome } from "../../db/queries/uniprodQueries";
+import { getQueryDataSummary } from "../../db/queries/uniprotQueries";
+import { getQueryDataSummaryGenome } from "../../db/queries/uniprotQueries";
 
 export default function QuerySummary() {
   const { expressionId } = useParams();
@@ -67,7 +67,7 @@ export default function QuerySummary() {
           
         <div>
           <h4>
-            A record from CollecTF | <Link to={`/uniprod/${tf_instance_id}`} className="text-accent hover:underline"> View full record </Link>
+            A record from CollecTF | <Link to={`/uniprot/${tf_instance_id}`} className="text-accent hover:underline"> View full record </Link>
           </h4> <br/>
           <ul>
             <li>

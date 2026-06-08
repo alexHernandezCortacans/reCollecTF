@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import SplitView from "./detail/SplitView";
 import EnsembleView from "./detail/EnsembleView";
 import ExportData from "./detail/ExportData";
-//import {getQueryDataUniprod} from "../../db/queries/uniprodQueries";
+//import {getQueryDataUniprot} from "../../db/queries/uniprotQueries";
 
 export default function ExpressionDetail() {
   const { expressionId } = useParams();

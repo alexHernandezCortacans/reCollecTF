@@ -1,6 +1,6 @@
 const dispatchUrl = "https://recollectf.vercel.app/api/functions/send-form.ts" //  "http://localhost:3000/api/auth/functions/send-form.ts"
 const BASE_URL = "https://recollectf.vercel.app/api/functions/"
-import { getMaxTfInstanceId } from "../db/queries/uniprodQueries";
+import { getMaxTfInstanceId } from "../db/queries/uniprotQueries";
 import { expressionIdFromTfInstanceId } from "../../src/utils/tfIdConverterToExpressionId";
 
 export async function dispatchWorkflow(data) {
@@ -49,7 +49,7 @@ export async function dispatchWorkflowPipe(data) {
 
 // htmlContent - index.html content / tf_instance_id - TF_instance id from DB 
 // uniprotAccession - uniprot code for that gene / expressionInfo - bool that defines if curation contains experimentally verified data
-export async function createUniprodAccessionFile(htmlContent, tf_instance_id, uniprotAccession, expressionInfo) {
+export async function createUniprotAccessionFile(htmlContent, tf_instance_id, uniprotAccession, expressionInfo) {
   const expressionId = expressionIdFromTfInstanceId(tf_instance_id); //+1 to generate the next tfId
 
   const res = await fetch("https://recollectf.vercel.app/api/functions/create-expression-page", {

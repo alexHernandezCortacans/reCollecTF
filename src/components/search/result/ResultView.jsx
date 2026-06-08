@@ -1,4 +1,4 @@
-import Result from "../../uniprod-tf-queries/detail/common/Result";
+import Result from "../../uniprot-tf-queries/detail/common/Result";
 
 const ResultView = ({ result }) => {
 
