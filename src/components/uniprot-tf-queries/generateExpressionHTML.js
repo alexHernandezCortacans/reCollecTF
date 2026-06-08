@@ -208,7 +208,7 @@ export function buildHTMLFromData(dataSV, result) {
 </body>
 </html>`;
 }
-export async function generateDetailedViewHTML(expressionId) {
+export async function generateExpressionHTML(expressionId) {
   if (!expressionId || !/^EXPREG_[a-f0-9A-F]+$/.test(expressionId)) {
     throw new Error(`expressionId inválido: ${expressionId}`);
   }

@@ -2,7 +2,7 @@ import fs from "fs";
 import readline from "readline";
 import { tfInstanceFromExpression } from "../src/utils/tfIdConverterToExpressionId.js"; 
 import path from "path";
-import { generateDetailedViewHTML } from "../src/components/uniprot-tf-queries/GenerateDetailedView.js";
+import { generateExpressionHTML } from "../src/components/uniprot-tf-queries/generateExpressionHTML.js";
 import { getAllTfInstanceIds } from "../src/db/queries/uniprotQueries.js";
 
 // This script is intended to be used ONLY by being called with "npm run generate-reports" profile,
@@ -56,7 +56,7 @@ async function main() {
   for (const tfId of tfIds) {
     const expressionId = expressionIdFromTfInstanceId(tfId);
     try {
-      const html = await generateDetailedViewHTML(expressionId);
+      const html = await generateExpressionHTML(expressionId);
       const expressionDir = path.join(publicDir, expressionId);
       if (!fs.existsSync(expressionDir)) fs.mkdirSync(expressionDir, { recursive: true });
       fs.writeFileSync(path.join(expressionDir, "index.html"), html, "utf-8");
