@@ -103,13 +103,13 @@ jobs:
 
   create-page:
     runs-on: ubuntu-latest
-    needs: update-db  # Solo se ejecuta si update-db termina con éxito
+    needs: update-db  # Executed only if successful DB update
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: main  # Asegura que tiene los últimos cambios del job anterior
+          ref: main # Makes sure create-page has the last changes in main
 
       - name: Conditional EXPR_ID/index.html creation and dbxref.txt updating
         run: |

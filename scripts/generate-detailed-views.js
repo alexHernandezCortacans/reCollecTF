@@ -20,7 +20,7 @@ async function getTfFromXRef() {
   const results = [];
 
   const rl = readline.createInterface({
-    input: fs.createReadStream('public/static/uniprot_dbxref_2_col.txt'),
+    input: fs.createReadStream('public/static/uniprot_dbxref_2_col.txt'), 
     terminal: false
   });
 
