@@ -98,7 +98,6 @@ jobs:
 
           git commit -m "Update database via workflow_dispatch"
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
-          git pull --rebase origin main
           git push origin main
 
   create-page:
@@ -165,5 +164,4 @@ jobs:
 
           git commit -m "Add expression page: $EXPR_ID"
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
-          git pull --rebase origin main
           git push origin main
