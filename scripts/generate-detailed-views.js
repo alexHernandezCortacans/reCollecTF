@@ -6,7 +6,17 @@ import { generateDetailedViewHTML } from "../src/components/uniprod-tf-queries/G
 import { getAllTfInstanceIds } from "../src/db/queries/uniprodQueries.js";
 import { generateUniprotDbXRef } from "../src/components/uniprod-tf-queries/uniprodbxrefGenerator.js";
 
+
+// This script is intended to be used ONLY by being called with "npm run generate-reports" profile,
+// "expregFilePath" is a file with a single column with an "EXPREG_XXXXXXXXX" format id on each row
+// Example:
+//
+//  EXPREG_00000030
+//  ...
+//  EXPREG_00000050
+
 const publicDir = path.resolve("public");
+const expregFilePath = "";
 
 function expressionIdFromTfInstanceId(tfInstanceId) {
   const hex = tfInstanceId
@@ -20,7 +30,7 @@ async function getTfFromXRef() {
   const results = [];
 
   const rl = readline.createInterface({
-    input: fs.createReadStream('public/static/uniprot_dbxref_2_col.txt'), 
+    input: fs.createReadStream('expregFilePath'), 
     terminal: false
   });
 
