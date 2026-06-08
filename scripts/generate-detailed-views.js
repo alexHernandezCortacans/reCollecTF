@@ -8,7 +8,7 @@ import { generateUniprotDbXRef } from "../src/components/uniprot-tf-queries/unip
 
 
 // This script is intended to be used ONLY by being called with "npm run generate-reports" profile,
-// "expregFilePath" is a file with a single column with an "EXPREG_XXXXXXXXX" format id on each row
+// "expregFilePath" is a file with a single column with an "EXPREG_XXXXXXX0" format id on each row
 // Example:
 //
 //  EXPREG_00000030
@@ -22,7 +22,7 @@ function expressionIdFromTfInstanceId(tfInstanceId) {
   const hex = tfInstanceId
     .toString(16)
     .toUpperCase()
-    .padStart(8, "0");
+    .padStart(7, "0");
   return `EXPREG_${hex}0`;
 }
 
@@ -30,7 +30,7 @@ async function getTfFromXRef() {
   const results = [];
 
   const rl = readline.createInterface({
-    input: fs.createReadStream('expregFilePath'), 
+    input: fs.createReadStream(expregFilePath), 
     terminal: false
   });
 
