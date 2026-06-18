@@ -35,7 +35,8 @@ export default defineConfig({
     
     }
   ],
-  base: "/",
+  // change to base:"/" in prod
+  base: "/reCollecTF/",
   build: {
     rollupOptions: {
       external: ['fsevents']
