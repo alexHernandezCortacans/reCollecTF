@@ -163,7 +163,7 @@ jobs:
             exit 0
           fi
 
-          if CREATED_FILE == "false" then 
+          if [ CREATED_FILE == "false" ]; then 
             echo "No changes to commit."
             exit 0
           fi
