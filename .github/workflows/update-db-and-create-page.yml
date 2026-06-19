@@ -155,7 +155,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          if [ CREATED_FILE == "false" ]; then 
+          if [ "$CREATED_FILE" = "false" ]; then 
             echo "No changes to commit."
             exit 0
           fi
