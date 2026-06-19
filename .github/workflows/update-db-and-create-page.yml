@@ -155,15 +155,15 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add "./public/$EXPR_ID/index.html"
-          git add "public/static/uniprot_dbxref.txt"
-
-          if git diff --cached --quiet; then
+          if [ CREATED_FILE == "false" ]; then 
             echo "No changes to commit."
             exit 0
           fi
 
-          if [ CREATED_FILE == "false" ]; then 
+          git add "./public/$EXPR_ID/index.html"
+          git add "public/static/uniprot_dbxref.txt"
+
+          if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
           fi
