@@ -57,6 +57,8 @@ async function fetchNuccoreTaxInfo(acc) {
   return out;
 }
 
+const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
+
 async function fetchTaxonomyLineageEx(taxid) {
   const url = `${ENTREZ_BASE}/esummary.fcgi?db=taxonomy&id=${encodeURIComponent(
     taxid
@@ -92,12 +94,23 @@ async function fetchTaxonomyLineageEx(taxid) {
     cleaned.push(n);
   }
 
+  // Filtra para quedarte només els rangs estàndar (phylum -> species)
+  const standardOnly = cleaned.filter((n) => STANDARD_RANKS.includes(n.rank));
+
+  // Retalla desde el primer 'phylum' trobat fins el final
+  // (si no hi ha phylum, deixa el que hi hagi disponible)
+  const phylumIdx = standardOnly.findIndex((n) => n.rank === "phylum");
+  const trimmed = phylumIdx >= 0 ? standardOnly.slice(phylumIdx) : standardOnly;
+
+  if (!trimmed.length) return [];
+
   // El format que guardem ja porta el parent_taxonomy_id per facilitar inserts
-  return cleaned.map((n, i) => ({
+  // El primer node (phylum, si existeix) té parent_taxonomy_id = null
+  return trimmed.map((n, i) => ({
     taxonomy_id: n.taxid,
     name: n.name,
     rank: n.rank,
-    parent_taxonomy_id: i === 0 ? null : cleaned[i - 1].taxid,
+    parent_taxonomy_id: i === 0 ? null : trimmed[i - 1].taxid,
   }));
 }
 
