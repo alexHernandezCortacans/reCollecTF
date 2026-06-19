@@ -115,7 +115,7 @@ jobs:
           EXPR_ID="${{ github.event.inputs.expression_id }}"
           UNIPROT="${{ github.event.inputs.uniprot_accession }}"
           EXPRESSION_INFO="${{ github.event.inputs.expressionInfo }}"
-          CREATED_FILE="true"
+          echo "CREATED_FILE=true" >> $GITHUB_ENV
           DBXREF_FILE="public/static/uniprot_dbxref.txt"
 
           # If EXPR_ID already exists in the dbxref file, skip update dbxref.txt, create index.html
@@ -128,7 +128,7 @@ jobs:
 
           # EXPR_ID is new — only add entry if expressionInfo is true
           if [ "$EXPRESSION_INFO" != "true" ]; then
-            CREATED_FILE="false"
+            echo "CREATED_FILE=false" >> $GITHUB_ENV
             echo "expressionInfo is not true, skipping dbxref update for new entry."
             exit 0
           fi
