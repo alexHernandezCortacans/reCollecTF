@@ -128,7 +128,7 @@ jobs:
 
           # EXPR_ID is new — only add entry if expressionInfo is true
           if [ "$EXPRESSION_INFO" != "true" ]; then
-            CREATED_FILE = "false"
+            CREATED_FILE="false"
             echo "expressionInfo is not true, skipping dbxref update for new entry."
             exit 0
           fi
