@@ -368,6 +368,8 @@ WHERE NOT EXISTS (
     }
 
     // Taxonomia + link a genome
+    console.log("taxonomyData:", JSON.stringify(taxonomyData, null, 2));
+
     const taxByAcc = taxonomyData?.byAccession || {};
 
     for (const acc of accessions) {
