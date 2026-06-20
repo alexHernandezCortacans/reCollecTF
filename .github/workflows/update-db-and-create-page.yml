@@ -78,7 +78,7 @@ jobs:
       - name: Delete SQL file after use
         run: |
           set -euo pipefail
-          git rm "$SQL_PATH"
+          rm -f "$SQL_PATH"
 
       - name: Commit updated database + cleanup sql file
         env:
