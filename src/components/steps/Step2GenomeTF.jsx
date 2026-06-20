@@ -57,70 +57,18 @@ async function fetchNuccoreTaxInfo(acc) {
   return out;
 }
 
-const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
-
-async function fetchTaxonomyLineageEx(taxid) {
-  const url = `${ENTREZ_BASE}/esummary.fcgi?db=taxonomy&id=${encodeURIComponent(
-    taxid
-  )}&retmode=json`;
-  const j = await fetchJson(url, { isNcbi: true });
-
-  const node = j?.result?.[String(taxid)];
-  if (!node) return null;
-
-  const lineageEx = Array.isArray(node.lineageex) ? node.lineageex : [];
-
-  const path = lineageEx.map((x) => ({
-    taxid: x?.taxid ? String(x.taxid) : "",
-    name: x?.scientificname || "",
-    rank: x?.rank || "no rank",
-  }));
-
-  // Afegim el node final (taxid consultat) si no hi és
-  const leaf = {
-    taxid: String(taxid),
-    name: node.scientificname || "",
-    rank: node.rank || "no rank",
-  };
-
-  if (!path.length || path[path.length - 1].taxid !== leaf.taxid) path.push(leaf);
-
-  // Neteja de duplicats i buits
-  const seen = new Set();
-  const cleaned = [];
-  for (const n of path) {
-    if (!n.taxid || seen.has(n.taxid)) continue;
-    seen.add(n.taxid);
-    cleaned.push(n);
-  }
-
-  // Filtra para quedarte només els rangs estàndar (phylum -> species)
-  const standardOnly = cleaned.filter((n) => STANDARD_RANKS.includes(n.rank));
-
-  // Retalla desde el primer 'phylum' trobat fins el final
-  // (si no hi ha phylum, deixa el que hi hagi disponible)
-  const phylumIdx = standardOnly.findIndex((n) => n.rank === "phylum");
-  const trimmed = phylumIdx >= 0 ? standardOnly.slice(phylumIdx) : standardOnly;
-
-  if (!trimmed.length) return [];
-
-  // El format que guardem ja porta el parent_taxonomy_id per facilitar inserts
-  // El primer node (phylum, si existeix) té parent_taxonomy_id = null
-  return trimmed.map((n, i) => ({
-    taxonomy_id: n.taxid,
-    name: n.name,
-    rank: n.rank,
-    parent_taxonomy_id: i === 0 ? null : trimmed[i - 1].taxid,
-  }));
-}
-
 async function computeTaxonomyForAcc(acc) {
   if (taxonomyCacheByAcc.has(acc)) return taxonomyCacheByAcc.get(acc);
 
   const info = await fetchNuccoreTaxInfo(acc);
+  console.log("taxInfo:", acc, info);
+
   if (!info?.taxid) throw new Error(`No taxid for accession ${acc}`);
 
   const chain = await fetchTaxonomyLineageEx(info.taxid);
+  console.log("chain:", acc, chain);
+
+
   if (!chain?.length) throw new Error(`No taxonomy lineage for taxid ${info.taxid}`);
 
   const payload = {
@@ -131,9 +79,56 @@ async function computeTaxonomyForAcc(acc) {
     chain,
     computedAt: new Date().toISOString(),
   };
-
+  
   taxonomyCacheByAcc.set(acc, payload);
   return payload;
+}
+
+const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
+
+async function fetchTaxonomyLineageEx(taxid) {
+  const url = `${ENTREZ_BASE}/efetch.fcgi?db=taxonomy&id=${encodeURIComponent(taxid)}&retmode=xml`;
+  
+  await ncbiRateLimit();
+  const r = await fetch(url, { method: "GET" });
+  if (!r.ok) throw new Error(`Fetch failed ${r.status} for ${url}`);
+  
+  const text = await r.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, "text/xml");
+
+  // Linaje desde LineageEx
+  const lineageExNodes = doc.querySelectorAll("LineageEx Taxon");
+  const path = Array.from(lineageExNodes).map((n) => ({
+    taxid: n.querySelector("TaxId")?.textContent?.trim() || "",
+    name: n.querySelector("ScientificName")?.textContent?.trim() || "",
+    rank: n.querySelector("Rank")?.textContent?.trim() || "no rank",
+  }));
+
+  // Añadir el nodo final (el taxid consultado)
+  const leaf = {
+    taxid: doc.querySelector("TaxaSet > Taxon > TaxId")?.textContent?.trim() || String(taxid),
+    name: doc.querySelector("TaxaSet > Taxon > ScientificName")?.textContent?.trim() || "",
+    rank: doc.querySelector("TaxaSet > Taxon > Rank")?.textContent?.trim() || "no rank",
+  };
+
+  if (!path.length || path[path.length - 1].taxid !== leaf.taxid) path.push(leaf);
+
+  // Filtrar solo rangos estándar
+  const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
+  const standardOnly = path.filter((n) => STANDARD_RANKS.includes(n.rank));
+
+  const phylumIdx = standardOnly.findIndex((n) => n.rank === "phylum");
+  const trimmed = phylumIdx >= 0 ? standardOnly.slice(phylumIdx) : standardOnly;
+
+  if (!trimmed.length) return [];
+
+  return trimmed.map((n, i) => ({
+    taxonomy_id: n.taxid,
+    name: n.name,
+    rank: n.rank,
+    parent_taxonomy_id: i === 0 ? null : trimmed[i - 1].taxid,
+  }));
 }
 
 export default function Step2GenomeTF() {
@@ -695,7 +690,7 @@ export default function Step2GenomeTF() {
     setUniprotList(uniProtItems);
     setRefseqList(refseqItems);
     setStrainData(strainObj);
-
+    console.log(taxonomyData);
     goToNextStep();
   }
 
