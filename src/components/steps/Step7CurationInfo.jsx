@@ -453,9 +453,15 @@ WHERE NOT EXISTS (
       const bundle = selectedBySite?.[site] || { kind: "none", hit: null, nearbyGenes: [] };
       const s5 = getStep5ForSite(step5Data, site);
 
+      const TF_FUNCTION_MAP = {
+        "activator": "ACT",
+        "repressor": "REP",
+        "dual": "DUAL",
+        "not specified": "N/A",
+      };
+
       const TF_type = pickFirstNonEmpty(s5?.tfType, "not specified");
-      const TF_function = pickFirstNonEmpty(s5?.tfFunc, "not specified");
-      const annotatedSeq = pickFirstNonEmpty(s5?.annotated_seq, s5?.annotatedSeq, site);
+      const TF_function = TF_FUNCTION_MAP[pickFirstNonEmpty(s5?.tfFunc, "not specified")] ?? "N/A";      const annotatedSeq = pickFirstNonEmpty(s5?.annotated_seq, s5?.annotatedSeq, site);
       const qv = s5?.quantitative_value ?? s5?.qval ?? s5?.qValue ?? null;
       const qvNum = Number(qv);
       const quantitativeValue = Number.isFinite(qvNum) ? qvNum : null;
