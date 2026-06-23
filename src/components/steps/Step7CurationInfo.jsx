@@ -561,7 +561,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
     // Using g.selected to get the exp_verified repressed genes
     const evidenceType = g.selected ? "exp_verified" : "inferred";
 
-          sql.push(`
+          sql.push(`  
       INSERT INTO core_regulation (curation_site_instance_id, gene_id, evidence_type, meta_site_id)
       SELECT
         ${curationSiteInstanceIdExpr},
