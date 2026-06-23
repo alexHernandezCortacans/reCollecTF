@@ -549,28 +549,27 @@ WHERE ${techIdExpr} IS NOT NULL
       }
 
       const regsForSite = step6Data?.[site]?.regulatedGenes || [];
-      if (Array.isArray(regsForSite) && regsForSite.length > 0) {
-        for (const g of regsForSite) {
-          const locus = pickFirstNonEmpty(g?.locus, "");
-          if (!locus) continue;
+if (Array.isArray(regsForSite) && regsForSite.length > 0) {
+  for (const g of regsForSite) {
+    const locus = pickFirstNonEmpty(g?.locus, "");
+    if (!locus) continue;
 
-          const geneIdExpr = `(SELECT gene_id FROM core_gene
-            WHERE locus_tag='${esc(locus)}' AND genome_id=${genomeIdExpr}
-            ORDER BY gene_id DESC LIMIT 1)`;
+    const geneIdExpr = `(SELECT gene_id FROM core_gene
+      WHERE locus_tag='${esc(locus)}' AND genome_id=${genomeIdExpr}
+      ORDER BY gene_id DESC LIMIT 1)`;
 
-          const evidenceType = containsExpression ? "exp_verified" : "inferred";
+    // Using g.selected to get the exp_verified repressed genes
+    const evidenceType = g.selected ? "exp_verified" : "inferred";
 
-          sql.push(
-            `
-INSERT INTO core_regulation (curation_site_instance_id, gene_id, evidence_type, meta_site_id)
-SELECT
-  ${curationSiteInstanceIdExpr},
-  ${geneIdExpr},
-  '${esc(evidenceType)}',
-  NULL
-WHERE ${geneIdExpr} IS NOT NULL;
-            `.trim()
-          );
+          sql.push(`
+      INSERT INTO core_regulation (curation_site_instance_id, gene_id, evidence_type, meta_site_id)
+      SELECT
+        ${curationSiteInstanceIdExpr},
+        ${geneIdExpr},
+        '${esc(evidenceType)}',
+        NULL
+      WHERE ${geneIdExpr} IS NOT NULL;
+          `.trim());
         }
       }
     }
