@@ -78,33 +78,47 @@ export async function createUniprotAccessionFile(htmlContent, tf_instance_id, un
 
 export async function dispatchAndCreate(data, htmlContent, tf_instance_id, uniprotAccession, expressionInfo) {
   const expressionId = expressionIdFromTfInstanceId(tf_instance_id);
+  const BASE_URL = "https://recollectf2.vercel.app/api/functions";
 
-  const res = await fetch("https://recollectf2.vercel.app/api/functions/dispatch-and-create", {
+  // Genera el sqlPath en el cliente para garantizar consistencia entre las dos llamadas
+  const safeTs = new Date().toISOString().replace(/[:.]/g, "-");
+  const sqlPath = `pending-sql/${safeTs}.sql`;
+
+  // 1) create-pending-sql
+  const sqlRes = await fetch(`${BASE_URL}/create-pending-sql`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({
-      inputs: data.inputs,
-      expressionId,
-      htmlContent,
-      expressionInfo,
-      uniprotAccession,
-    }),
+    body: JSON.stringify({ inputs: data.inputs, sqlPath }),
   });
 
-  const text = await res.text();
-  let payload;
-  try {
-    payload = text ? JSON.parse(text) : null;
-  } catch {
-    payload = text;
-  }
+  const sqlText = await sqlRes.text();
+  let sqlPayload;
+  try { sqlPayload = sqlText ? JSON.parse(sqlText) : null; } catch { sqlPayload = sqlText; }
 
-  if (!res.ok) {
-    const err = new Error(`Dispatch and create failed (${res.status})`);
-    err.payload = payload;
+  if (!sqlRes.ok) {
+    const err = new Error(`create-pending-sql failed (${sqlRes.status})`);
+    err.payload = sqlPayload;
     throw err;
   }
 
-  return payload;
+  // 2) update-db-and-create-static-page
+  const workflowRes = await fetch(`${BASE_URL}/update-db-and-create-static-page`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ sqlPath, expressionId, htmlContent, expressionInfo, uniprotAccession }),
+  });
+
+  const workflowText = await workflowRes.text();
+  let workflowPayload;
+  try { workflowPayload = workflowText ? JSON.parse(workflowText) : null; } catch { workflowPayload = workflowText; }
+
+  if (!workflowRes.ok) {
+    const err = new Error(`update-db-and-create-static-page failed (${workflowRes.status})`);
+    err.payload = workflowPayload;
+    throw err;
+  }
+
+  return workflowPayload;
 }
