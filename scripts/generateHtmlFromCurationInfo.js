@@ -137,6 +137,9 @@ export async function generateHTMLFromCurationContext({
         const gene_name = pickFirstNonEmpty(g?.geneLabel, g?.gene, g?.name, "");
         const locus_tag = pickFirstNonEmpty(g?.locus, "");
         if (!gene_name && !locus_tag) continue;
+        
+        // sets regulated/not with selected
+        const evidence_type = g.selected ? "exp_verified" : "inferred";
 
         for (const tech of siteTechniques.length ? siteTechniques : [{ technique_id: null, tech_name: "", EO_term: null }]) {
           result.push({
