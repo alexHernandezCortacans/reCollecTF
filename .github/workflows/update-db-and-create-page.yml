@@ -42,13 +42,14 @@ jobs:
           SQL_PATH="${{ github.event.inputs.sql_path }}"
           
           echo "Waiting for SQL file to be visible: $SQL_PATH"
-          for i in {1..960}; do
+          for i in {1..120}; do
+            git pull --rebase origin main
             if [ -f "$SQL_PATH" ]; then
               echo "✓ SQL file found!"
               exit 0
             fi
-            echo "Attempt $i/10: File not found, retrying in 500ms..."
-            sleep 0.5
+            echo "Attempt $i/120: File not found, retrying in 3s..."
+            sleep 3
           done
           
           echo "✗ SQL file not found after retries"
