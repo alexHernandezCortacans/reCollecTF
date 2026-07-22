@@ -32,9 +32,11 @@ async function fetchJson(url, { isNcbi = false } = {}) {
 const taxonomyCacheByAcc = new Map();
 const nuccoreCacheByAcc = new Map();
 
+// Gets { taxid: for lineage creation, organism: Used on multiple fields, title: Used on multiple fields } from initial taxon 
 async function fetchNuccoreTaxInfo(acc) {
   if (nuccoreCacheByAcc.has(acc)) return nuccoreCacheByAcc.get(acc);
 
+  // Esearch to get the uid 
   const url1 = `${ENTREZ_BASE}/esearch.fcgi?db=nuccore&retmode=json&term=${encodeURIComponent(
     acc
   )}[accn]`;
@@ -42,6 +44,7 @@ async function fetchNuccoreTaxInfo(acc) {
   const uid = j1?.esearchresult?.idlist?.[0];
   if (!uid) return null;
 
+  // Esummary to get the return parameters above on {}
   const url2 = `${ENTREZ_BASE}/esummary.fcgi?db=nuccore&id=${uid}&retmode=json`;
   const j2 = await fetchJson(url2, { isNcbi: true });
   const rec = j2?.result?.[uid];
@@ -57,6 +60,56 @@ async function fetchNuccoreTaxInfo(acc) {
   return out;
 }
 
+const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
+
+async function fetchTaxonomyLineageEx(taxid) {
+  const url = `${ENTREZ_BASE}/efetch.fcgi?db=taxonomy&id=${encodeURIComponent(taxid)}&retmode=xml`;
+  
+  await ncbiRateLimit();
+  const r = await fetch(url, { method: "GET" });
+  if (!r.ok) throw new Error(`Fetch failed ${r.status} for ${url}`);
+  
+
+  // Treating recieved data
+  const text = await r.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, "text/xml");
+
+  // Lineage from LineageEx
+  const lineageExNodes = doc.querySelectorAll("LineageEx Taxon");
+  const path = Array.from(lineageExNodes).map((n) => ({
+    taxid: n.querySelector("TaxId")?.textContent?.trim() || "",
+    name: n.querySelector("ScientificName")?.textContent?.trim() || "",
+    rank: n.querySelector("Rank")?.textContent?.trim() || "no rank",
+  }));
+
+  // Adding the last node, the introduced org
+  const leaf = {
+    taxid: doc.querySelector("TaxaSet > Taxon > TaxId")?.textContent?.trim() || String(taxid),
+    name: doc.querySelector("TaxaSet > Taxon > ScientificName")?.textContent?.trim() || "",
+    rank: doc.querySelector("TaxaSet > Taxon > Rank")?.textContent?.trim() || "no rank",
+  };
+
+  if (!path.length || path[path.length - 1].taxid !== leaf.taxid) path.push(leaf);
+
+  // Filtered by the defined ranks on STANDARD_RANKS
+  const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
+  const standardOnly = path.filter((n) => STANDARD_RANKS.includes(n.rank));
+
+  const phylumIdx = standardOnly.findIndex((n) => n.rank === "phylum");
+  const trimmed = phylumIdx >= 0 ? standardOnly.slice(phylumIdx) : standardOnly;
+
+  if (!trimmed.length) return [];
+
+  return trimmed.map((n, i) => ({
+    taxonomy_id: n.taxid,
+    name: n.name,
+    rank: n.rank,
+    parent_taxonomy_id: i === 0 ? null : trimmed[i - 1].taxid,
+  }));
+}
+
+// pos name: 
 async function computeTaxonomyForAcc(acc) {
   if (taxonomyCacheByAcc.has(acc)) return taxonomyCacheByAcc.get(acc);
 
@@ -82,53 +135,6 @@ async function computeTaxonomyForAcc(acc) {
   
   taxonomyCacheByAcc.set(acc, payload);
   return payload;
-}
-
-const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
-
-async function fetchTaxonomyLineageEx(taxid) {
-  const url = `${ENTREZ_BASE}/efetch.fcgi?db=taxonomy&id=${encodeURIComponent(taxid)}&retmode=xml`;
-  
-  await ncbiRateLimit();
-  const r = await fetch(url, { method: "GET" });
-  if (!r.ok) throw new Error(`Fetch failed ${r.status} for ${url}`);
-  
-  const text = await r.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, "text/xml");
-
-  // Linaje desde LineageEx
-  const lineageExNodes = doc.querySelectorAll("LineageEx Taxon");
-  const path = Array.from(lineageExNodes).map((n) => ({
-    taxid: n.querySelector("TaxId")?.textContent?.trim() || "",
-    name: n.querySelector("ScientificName")?.textContent?.trim() || "",
-    rank: n.querySelector("Rank")?.textContent?.trim() || "no rank",
-  }));
-
-  // Añadir el nodo final (el taxid consultado)
-  const leaf = {
-    taxid: doc.querySelector("TaxaSet > Taxon > TaxId")?.textContent?.trim() || String(taxid),
-    name: doc.querySelector("TaxaSet > Taxon > ScientificName")?.textContent?.trim() || "",
-    rank: doc.querySelector("TaxaSet > Taxon > Rank")?.textContent?.trim() || "no rank",
-  };
-
-  if (!path.length || path[path.length - 1].taxid !== leaf.taxid) path.push(leaf);
-
-  // Filtrar solo rangos estándar
-  const STANDARD_RANKS = ["phylum", "class", "order", "family", "genus", "species"];
-  const standardOnly = path.filter((n) => STANDARD_RANKS.includes(n.rank));
-
-  const phylumIdx = standardOnly.findIndex((n) => n.rank === "phylum");
-  const trimmed = phylumIdx >= 0 ? standardOnly.slice(phylumIdx) : standardOnly;
-
-  if (!trimmed.length) return [];
-
-  return trimmed.map((n, i) => ({
-    taxonomy_id: n.taxid,
-    name: n.name,
-    rank: n.rank,
-    parent_taxonomy_id: i === 0 ? null : trimmed[i - 1].taxid,
-  }));
 }
 
 export default function Step2GenomeTF() {
@@ -708,6 +714,12 @@ export default function Step2GenomeTF() {
             placeholder="Example: LexA"
             value={searchName}
             onChange={(e) => handleAutocompleteTF(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddTf(e);
+              }
+            }}
           />
 
           <button
