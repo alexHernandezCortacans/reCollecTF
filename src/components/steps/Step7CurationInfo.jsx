@@ -169,7 +169,7 @@ INSERT INTO core_publication
    contains_promoter_data, contains_expression_data, submission_notes, curation_complete,
    reported_TF, reported_species)
 SELECT
-  'ARTICLE',
+  'pubmed',
   ${pmid ? `'${esc(pmid)}'` : "NULL"},
   '${esc(pubAuthors)}',
   '${esc(pubTitle)}',
