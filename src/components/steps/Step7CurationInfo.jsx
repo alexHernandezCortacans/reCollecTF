@@ -255,13 +255,14 @@ WHERE lower(name)=lower('${esc(tfName)}');
     // TF instance
     sql.push(
       `
-INSERT INTO core_tfinstance (refseq_accession, uniprot_accession, description, TF_id, notes)
+INSERT INTO core_tfinstance (refseq_accession, uniprot_accession, description, TF_id, notes, GO_term_id)
 SELECT
   '${esc(refAcc)}',
   '${esc(uniAcc)}',
   '${esc(tfInstanceDesc)}',
   ${tfIdExpr},
-  '${esc(tfInstanceNotes)}'
+  '${esc(tfInstanceNotes)}',
+  ''
 WHERE NOT EXISTS (
   SELECT 1 FROM core_tfinstance WHERE uniprot_accession='${esc(uniAcc)}'
 );
@@ -275,7 +276,9 @@ SET
   TF_id = ${forceTfOverride ? `${tfIdExpr}` : `COALESCE(TF_id, ${tfIdExpr})`},
   refseq_accession = COALESCE(NULLIF(refseq_accession,''), '${esc(refAcc)}'),
   description = ${forceTfOverride ? `'${esc(tfInstanceDesc)}'` : `COALESCE(NULLIF(description,''), '${esc(tfInstanceDesc)}')`},
-  notes = COALESCE(notes, '')
+  notes = COALESCE(notes, ''),
+  GO_term_id = COALESCE(GO_term_id, '')
+
 WHERE uniprot_accession='${esc(uniAcc)}';
       `.trim()
     );

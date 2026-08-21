@@ -123,7 +123,7 @@ export default function Step4ReportedSites() {
   const [accordion, setAccordion] = useState({ a1: true, a2: true, a3: false });
   const toggleAcc = (k) => setAccordion((p) => ({ ...p, [k]: !p[k] }));
 
-  const [siteType, setSiteType] = useState("var_motif_associated");
+  const [siteType, setSiteType] = useState("motif_associated");
   const [rawSites, setRawSites] = useState("");
   const [sites, setSites] = useState([]);
 
@@ -145,7 +145,7 @@ export default function Step4ReportedSites() {
   useEffect(() => {
     if (!step4Data) return;
 
-    setSiteType(step4Data.siteType || "var_motif_associated");
+    setSiteType(step4Data.siteType || "motif_associated");
     setRawSites(step4Data.rawSites || "");
     setSites(step4Data.sites || []);
     setExactHits(step4Data.exactHits || {});
@@ -590,7 +590,11 @@ export default function Step4ReportedSites() {
           <div className="space-y-3 text-sm">
             <div className="space-y-1">
               <label className="flex items-center gap-2">
-                <input type="radio" checked={siteType === "motif_associated"} onChange={() => setSiteType("motif_associated")} />
+                <input 
+                  type="radio" 
+                  checked={siteType === "motif_associated"} 
+                  onChange={() => setSiteType("motif_associated")} 
+                />
                 Motif-associated (new motif)
               </label>
 
