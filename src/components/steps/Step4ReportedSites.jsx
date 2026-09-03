@@ -194,12 +194,13 @@ export default function Step4ReportedSites() {
         }
 
         try {
+          /*
           const fastaUrl = buildNcbiUrl({ db: "nuccore", id: acc, rettype: "fasta", retmode: "text" });
           const fastaText = await fetchTextWithFallback(fastaUrl);
-
-          const seq = fastaText.replace(/>.*/g, "").replace(/[^ATCGatcg]/g, "").toUpperCase();
-          if (!seq || seq.length < 100) throw new Error(`Empty/invalid FASTA for ${acc}`);
-
+          */
+          //const seq = fastaText.replace(/>.*/g, "").replace(/[^ATCGatcg]/g, "").toUpperCase();
+          //if (!seq || seq.length < 100) throw new Error(`Empty/invalid FASTA for ${acc}`);
+          
           const gbUrl = buildNcbiUrl({
             db: "nuccore",
             id: acc,
@@ -210,6 +211,7 @@ export default function Step4ReportedSites() {
 
           const parsed = genbankParser(gbText);
           const entry = parsed?.[0];
+          const seq = entry?.sequence || [];
           const features = entry?.features || [];
 
           // Barregem gene + CDS pel mateix locus_tag
