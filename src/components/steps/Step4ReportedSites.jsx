@@ -211,8 +211,10 @@ export default function Step4ReportedSites() {
 
           const parsed = genbankParser(gbText);
           const entry = parsed?.[0];
-          const seq = entry?.sequence || [];
+          const seq = entry?.sequence.toUpperCase() || [];
           const features = entry?.features || [];
+
+          console.log(seq);
 
           // Barregem gene + CDS pel mateix locus_tag
           const locusMap = new Map();
