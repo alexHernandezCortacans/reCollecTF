@@ -194,13 +194,6 @@ export default function Step4ReportedSites() {
         }
 
         try {
-          /*
-          const fastaUrl = buildNcbiUrl({ db: "nuccore", id: acc, rettype: "fasta", retmode: "text" });
-          const fastaText = await fetchTextWithFallback(fastaUrl);
-          */
-          //const seq = fastaText.replace(/>.*/g, "").replace(/[^ATCGatcg]/g, "").toUpperCase();
-          //if (!seq || seq.length < 100) throw new Error(`Empty/invalid FASTA for ${acc}`);
-          
           const gbUrl = buildNcbiUrl({
             db: "nuccore",
             id: acc,
@@ -211,10 +204,6 @@ export default function Step4ReportedSites() {
 
           const parsed = genbankParser(gbText);
           const entry = parsed?.[0];
-
-          // TREURE
-          console.log("TEST SEQUENCE");
-          console.log(entry?.sequence);
 
           const seq = entry?.sequence.toUpperCase() || "";
           const features = entry?.features || [];
