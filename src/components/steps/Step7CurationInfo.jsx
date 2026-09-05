@@ -615,8 +615,8 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
         step6Data,
       });
 
-      const htmlContent = gzip( html );
-
+      // We compress and pass it to string to be able to sent it to vercel's endpoint
+      const htmlContent = String.fromCharCode( gzip( html ) );
       console.log(htmlContent);
       
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
