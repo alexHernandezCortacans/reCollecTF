@@ -1,5 +1,5 @@
 // src/components/steps/Step7CurationInfo.jsx
-const zlib = require('zlib');
+import zlib from "zlib";
 import { useMemo, useState } from "react";
 import { useCuration } from "../../contexts/CurationContext";
 import { dispatchAndCreate, dispatchWorkflowPipe } from "../../utils/serverless";
