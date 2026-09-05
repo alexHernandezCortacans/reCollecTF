@@ -1,5 +1,5 @@
 // src/components/steps/Step7CurationInfo.jsx
-import { gzipSync } from "zlib";
+import { gzipToBase64 } from "../../utils/compressAndConvertBase64";
 import { useMemo, useState } from "react";
 import { useCuration } from "../../contexts/CurationContext";
 import { dispatchAndCreate, dispatchWorkflowPipe } from "../../utils/serverless";
@@ -616,8 +616,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
       });
 
       // We compress and pass it to string to be able to sent it to vercel's endpoint
-      const compressed = gzipSync(Buffer.from(html, "utf8"));
-      const htmlContent = compressed.toString("base64"); 
+      const htmlContent = await gzipToBase64(html);      
       console.log(htmlContent);
       
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
