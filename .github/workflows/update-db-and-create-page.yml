@@ -9,9 +9,6 @@ on:
       expression_id:
         description: "Expression ID (e.g. EXPREG_000014f0)"
         required: true
-      html_content:
-        description: "HTML content (base64 encoded)"
-        required: true
       expressionInfo:
         description: "Boolean, true if curation contains experimentally verified data"
         required: true
@@ -128,13 +125,31 @@ jobs:
           fetch-depth: 0
           ref: main # Makes sure create-page has the last changes in main
 
-
-      - name: Decode and decompress html_content
-        env:
-          HTML_CONTENT: ${{ github.event.inputs.html_content }}
+      - name: Wait for HTML file to be visible
         run: |
           set -euo pipefail
-          printf '%s' "$HTML_CONTENT" | base64 -d | gunzip > /tmp/index.html
+          HTML_FILE="pending-html/${{ github.event.inputs.expression_id }}.html.gz.b64"
+          
+          echo "Waiting for HTML file to be visible: $HTML_FILE"
+          for i in {1..120}; do
+            git pull --rebase origin main
+            if [ -f "$HTML_FILE" ]; then
+              echo "✓ HTML file found!"
+              exit 0
+            fi
+            echo "Attempt $i/120: File not found, retrying in 3s..."
+            sleep 3
+          done
+          
+          echo "✗ HTML file not found after retries"
+          exit 1
+
+      - name: Decode and decompress html_content
+        run: |
+          set -euo pipefail
+          HTML_FILE="pending-html/${{ github.event.inputs.expression_id }}.html.gz.b64"
+          cat "$HTML_FILE" | base64 -d | gunzip > /tmp/index.html
+          git rm "$HTML_FILE"
           echo "HTML_PATH=/tmp/index.html" >> $GITHUB_ENV
 
       - name: Conditional EXPR_ID/index.html creation and dbxref.txt updating
