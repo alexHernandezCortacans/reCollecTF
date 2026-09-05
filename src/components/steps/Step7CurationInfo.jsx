@@ -1,5 +1,5 @@
 // src/components/steps/Step7CurationInfo.jsx
-import { pako } from "pako";
+import pako from "pako";
 import { useMemo, useState } from "react";
 import { useCuration } from "../../contexts/CurationContext";
 import { dispatchAndCreate, dispatchWorkflowPipe } from "../../utils/serverless";
