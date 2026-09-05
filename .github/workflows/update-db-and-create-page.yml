@@ -147,7 +147,7 @@ jobs:
           if grep -qF "$EXPR_ID" "$DBXREF_FILE"; then
             echo "$EXPR_ID already in $DBXREF_FILE, skipping dbxref update."
             mkdir -p "./public/$EXPR_ID"
-            echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
+            cp "$HTML_PATH" "./public/$EXPR_ID/index.html"
             exit 0
           fi
 
@@ -166,7 +166,7 @@ jobs:
 
           # If EXPR_ID not in dbxref and EXPRESSION_INFO true add new entry to dbxref file and create index.html
           mkdir -p "./public/$EXPR_ID"
-          echo "${{ github.event.inputs.html_content }}" | base64 -d > "./public/$EXPR_ID/index.html"
+          cp "$HTML_PATH" "./public/$EXPR_ID/index.html"
           echo "${UNIPROT}	${EXPR_ID}" >> "$DBXREF_FILE"
           echo "Added new entry: ${UNIPROT}	${EXPR_ID}"
 
