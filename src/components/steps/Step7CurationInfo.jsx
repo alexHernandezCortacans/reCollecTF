@@ -603,7 +603,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
     
     try {
       const sqlString = buildFullSql();
-      const html = await generateHTMLFromCurationContext({
+      const htmlContent = await generateHTMLFromCurationContext({
         tf,
         uniprotList,
         strainData,
@@ -616,7 +616,6 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
       });
 
       // We compress and pass it to string to be able to sent it to vercel's endpoint
-      const htmlContent = await gzipToBase64(html);      
       console.log(htmlContent);
       
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
