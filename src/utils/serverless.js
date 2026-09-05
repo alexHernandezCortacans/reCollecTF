@@ -83,7 +83,7 @@ export async function dispatchAndCreate(data, htmlContent, tf_instance_id, unipr
   // Genera el sqlPath en el cliente para garantizar consistencia entre las dos llamadas
   const safeTs = new Date().toISOString().replace(/[:.]/g, "-");
   const sqlPath = `pending-sql/${safeTs}.sql`;
-
+  /*
   // 1) create-pending-sql
   const sqlRes = await fetch(`${BASE_URL}/create-pending-sql`, {
     method: "POST",
@@ -101,13 +101,13 @@ export async function dispatchAndCreate(data, htmlContent, tf_instance_id, unipr
     err.payload = sqlPayload;
     throw err;
   }
-
-  // 2) update-db-and-create-static-page
+  */
+  // 1) update-db-and-create-static-page
   const workflowRes = await fetch(`${BASE_URL}/update-db-and-create-static-page`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ sqlPath, expressionId, htmlContent, expressionInfo, uniprotAccession }),
+    body: JSON.stringify({ inputs: data.inputs, sqlPath, expressionId, htmlContent, expressionInfo, uniprotAccession }),
   });
 
   const workflowText = await workflowRes.text();
