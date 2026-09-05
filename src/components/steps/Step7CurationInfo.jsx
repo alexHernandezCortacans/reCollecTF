@@ -1,4 +1,5 @@
 // src/components/steps/Step7CurationInfo.jsx
+import { gzipSync } from "node:zlib"; 
 import { useMemo, useState } from "react";
 import { useCuration } from "../../contexts/CurationContext";
 import { dispatchAndCreate, dispatchWorkflowPipe } from "../../utils/serverless";
@@ -602,7 +603,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
     
     try {
       const sqlString = buildFullSql();
-      const htmlContent = await generateHTMLFromCurationContext({
+      const htmlContent = gzipSync( await generateHTMLFromCurationContext({
         tf,
         uniprotList,
         strainData,
@@ -612,7 +613,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
         step4Data,
         step5Data,
         step6Data,
-      });
+      }));
       
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
       
@@ -650,7 +651,21 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
             ? JSON.stringify(e.payload, null, 2)
             : "";
 
-      setMsg(`Error: ${e?.message || String(e)}\n\n${details}`);
+      if (e?.status === 422 && e?.message?.includes("inputs are too large")) {
+        setMsg(`Error: ${e?.message || String(e)}\n\n${details} \n Sending the curated data without updating the corresponding static page.\n Please await until the process completes.`);
+
+        await dispatchAndCreate(
+        { inputs: { queries: sqlString } },
+        "",
+        tf_instance_id,
+        uniprotAccession,
+        "false"
+      );
+
+      }
+      else {
+        setMsg(`Error: ${e?.message || String(e)}\n\n${details} `);
+      }
     } finally {
       setLoading(false);
     }

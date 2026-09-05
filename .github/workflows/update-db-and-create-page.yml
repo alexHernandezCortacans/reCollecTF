@@ -128,6 +128,12 @@ jobs:
           fetch-depth: 0
           ref: main # Makes sure create-page has the last changes in main
 
+      - name: Decode and decompress html_content
+        run: |
+          set -euo pipefail
+          echo "${{ github.event.inputs.html_content }}" | base64 -d | gunzip > /tmp/index.html
+          echo "HTML_PATH=/tmp/index.html" >> $GITHUB_ENV
+
       - name: Conditional EXPR_ID/index.html creation and dbxref.txt updating
         run: |
           set -euo pipefail
