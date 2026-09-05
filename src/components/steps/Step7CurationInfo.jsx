@@ -603,7 +603,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
     
     try {
       const sqlString = buildFullSql();
-      const htmlContent = gzip( await generateHTMLFromCurationContext({
+      const html = await generateHTMLFromCurationContext({
         tf,
         uniprotList,
         strainData,
@@ -613,7 +613,11 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
         step4Data,
         step5Data,
         step6Data,
-      }));
+      });
+
+      const htmlContent = gzip( html );
+
+      console.log(htmlContent);
       
       const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
       
