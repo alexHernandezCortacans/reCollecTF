@@ -125,15 +125,36 @@ export default function Step7CurationInfo() {
     const familyIdNum = Number(rawFamilyId);
     const hasFamilyId = Number.isFinite(familyIdNum) && familyIdNum > 0;
 
-    const familyName = pickFirstNonEmpty(tf?.familyName, tf?.family_name, tf?.family, `AutoFamily:${tfName}`);
+    const familyName = pickFirstNonEmpty(
+      tf?.familyName,
+      tf?.family_name,
+      tf?.family,
+      `AutoFamily:${tfName}`
+    );
     const familyDesc = pickFirstNonEmpty(tf?.family_description, tf?.newFamilyDesc, "", "");
     const tfDesc = pickFirstNonEmpty(tf?.description, "", "");
 
-    const uniAcc = pickFirstNonEmpty(firstAcc(uniprotList), tf?.uniprot_accession, tf?.uniprot, "");
+    const uniAcc = pickFirstNonEmpty(
+      firstAcc(uniprotList),
+      tf?.uniprot_accession,
+      tf?.uniprot,
+      ""
+    );
     uniprotAccession = uniAcc;
-    
-    const refAcc = pickFirstNonEmpty(firstAcc(refseqList), tf?.refseq_accession, tf?.refseq, "");
-    const tfInstanceDesc = pickFirstNonEmpty(firstDesc(uniprotList), firstDesc(refseqList), tfDesc, tfName, "—");
+
+    const refAcc = pickFirstNonEmpty(
+      firstAcc(refseqList),
+      tf?.refseq_accession,
+      tf?.refseq,
+      ""
+    );
+    const tfInstanceDesc = pickFirstNonEmpty(
+      firstDesc(uniprotList),
+      firstDesc(refseqList),
+      tfDesc,
+      tfName,
+      "—"
+    );
     const tfInstanceNotes = "";
 
     if (!uniAcc) throw new Error("Missing UniProt accession (Step 2).");
@@ -142,7 +163,9 @@ export default function Step7CurationInfo() {
     // Espècies tal com surt a Step2
     const siteSpecies = pickFirstNonEmpty(
       strainData?.organismTFBindingSites,
-      (genomeList?.[0] && (genomeList[0].organism || genomeList[0].description)) || "",
+      (genomeList?.[0] &&
+        (genomeList[0].organism || genomeList[0].description)) ||
+        "",
       ""
     );
 
@@ -151,9 +174,9 @@ export default function Step7CurationInfo() {
     const containsExpression = truthyBool(strainData?.expressionInfo);
 
     const requiresRevision = revisionReason !== "None";
-    const submissionNotes = [requiresRevision ? `Revision reason: ${revisionReason}` : "", notes]
-      .filter(Boolean)
-      .join("\n");
+    const revisionNote = requiresRevision
+      ? `Revision reason: ${revisionReason}`
+      : "";
 
     const selectedBySite = step4Data?.selectedBySite || {};
     const siteType = pickFirstNonEmpty(step4Data?.siteType, "");
@@ -179,7 +202,7 @@ SELECT
   ${url ? `'${esc(url)}'` : "NULL"},
   ${containsPromoter},
   ${containsExpression},
-  ${submissionNotes ? `'${esc(submissionNotes)}'` : "NULL"},
+  ${revisionNote ? `'${esc(revisionNote)}'` : "NULL"},
   ${truthyBool(curationComplete)},
   '${esc(tfName)}',
   '${esc(siteSpecies)}'
@@ -204,7 +227,7 @@ SET
   contains_expression_data = ${containsExpression},
   curation_complete = ${truthyBool(curationComplete)},
   submission_notes = CASE
-    WHEN submission_notes IS NULL OR submission_notes='' THEN ${submissionNotes ? `'${esc(submissionNotes)}'` : "submission_notes"}
+    WHEN submission_notes IS NULL OR submission_notes='' THEN ${revisionNote ? `'${esc(revisionNote)}'` : "submission_notes"}
     ELSE submission_notes
   END
 WHERE ${pubKeyWhere};
@@ -279,7 +302,6 @@ SET
   description = ${forceTfOverride ? `'${esc(tfInstanceDesc)}'` : `COALESCE(NULLIF(description,''), '${esc(tfInstanceDesc)}')`},
   notes = COALESCE(notes, ''),
   GO_term_id = COALESCE(GO_term_id, '')
-
 WHERE uniprot_accession='${esc(uniAcc)}';
       `.trim()
     );
@@ -290,7 +312,7 @@ WHERE uniprot_accession='${esc(uniAcc)}';
 
     // Curation
     const curatorIdExpr = `(SELECT curator_id FROM core_curator ORDER BY curator_id LIMIT 1)`;
-    const curationNotes = pickFirstNonEmpty(submissionNotes, "");
+    const curationNotes = pickFirstNonEmpty(notes, "");
 
     sql.push(
       `
@@ -318,18 +340,47 @@ WHERE NOT EXISTS (
     );
 
     // Genomes + genes
-    const accessions = (genomeList || []).map((g) => g.accession).filter(Boolean);
+    const genomes = (genomeList || []).filter((g) => g?.accession);
 
-    for (const acc of accessions) {
+    const accessions = genomes.map((g) => g.accession).filter(Boolean);
+
+    for (const genome of genomes) {
+      const acc = genome.accession;
+      const gi = pickFirstNonEmpty(genome?.gi, "");
+      const organism = pickFirstNonEmpty(
+        genome?.organism,
+        genome?.description,
+        siteSpecies,
+        ""
+      );
+
       sql.push(
         `
-INSERT INTO core_genome (genome_accession, organism)
-SELECT '${esc(acc)}', '${esc(siteSpecies)}'
+INSERT INTO core_genome (genome_accession, organism, gi)
+SELECT
+  '${esc(acc)}',
+  '${esc(organism)}',
+  ${gi ? `'${esc(gi)}'` : "NULL"}
 WHERE NOT EXISTS (
   SELECT 1 FROM core_genome WHERE genome_accession='${esc(acc)}'
 );
         `.trim()
       );
+
+      // Si el genoma ja existeix, només omplim GI si encara no té valor.
+      if (gi) {
+        sql.push(
+          `
+UPDATE core_genome
+SET
+  gi = CASE
+    WHEN gi IS NULL OR gi = '' THEN '${esc(gi)}'
+    ELSE gi
+  END
+WHERE genome_accession='${esc(acc)}';
+          `.trim()
+        );
+      }
     }
 
     const genesByAcc = step4Data?.genesByAcc || null;
@@ -388,7 +439,9 @@ WHERE NOT EXISTS (
         const rank = String(node.rank || "no rank").trim();
         if (!taxid) continue;
 
-        const parentTaxid = i > 0 ? String(chain[i - 1].taxonomy_id || "").trim() : "";
+        const parentTaxid =
+          i > 0 ? String(chain[i - 1].taxonomy_id || "").trim() : "";
+
         const parentIdExpr = parentTaxid
           ? `(SELECT id FROM core_taxonomy WHERE taxonomy_id='${esc(parentTaxid)}' LIMIT 1)`
           : "NULL";
@@ -403,7 +456,7 @@ SELECT
 WHERE NOT EXISTS (
   SELECT 1 FROM core_taxonomy WHERE taxonomy_id='${esc(taxid)}'
 );
-    `.trim());
+        `.trim());
 
         sql.push(`
 UPDATE core_taxonomy
@@ -412,10 +465,13 @@ SET
   name = COALESCE(NULLIF(name,''), ${name ? `'${esc(name)}'` : "name"}),
   parent_id = COALESCE(parent_id, ${parentIdExpr})
 WHERE taxonomy_id='${esc(taxid)}';
-    `.trim());
+        `.trim());
       }
 
-      const leafTaxid = String(chain[chain.length - 1]?.taxonomy_id || "").trim();
+      const leafTaxid = String(
+        chain[chain.length - 1]?.taxonomy_id || ""
+      ).trim();
+
       if (leafTaxid) {
         sql.push(`
 UPDATE core_genome
@@ -423,26 +479,38 @@ SET taxonomy_id = (
   SELECT id FROM core_taxonomy WHERE taxonomy_id='${esc(leafTaxid)}' LIMIT 1
 )
 WHERE genome_accession='${esc(acc)}';
-    `.trim());
+        `.trim());
       }
     }
-
 
     // Tècniques
     const techList = Array.isArray(techniques) ? techniques : [];
 
     for (const t of techList) {
-      const EO = pickFirstNonEmpty(t?.ecoId, t?.eco, t?.EO_term, t?.id, t?.code, "");
+      const EO = pickFirstNonEmpty(
+        t?.ecoId,
+        t?.eco,
+        t?.EO_term,
+        t?.id,
+        t?.code,
+        ""
+      );
       if (!EO) continue;
 
-      const preset = pickFirstNonEmpty(t?.presetFunction, t?.preset_function, "");
+      const preset = pickFirstNonEmpty(
+        t?.presetFunction,
+        t?.preset_function,
+        ""
+      );
       const name = pickFirstNonEmpty(t?.name, EO);
       const desc = pickFirstNonEmpty(t?.description, t?.name, "—");
 
       sql.push(
         `
 INSERT INTO core_experimentaltechnique (name, description, preset_function, EO_term)
-SELECT '${esc(name)}', '${esc(desc)}', ${preset ? `'${esc(preset)}'` : "NULL"}, '${esc(EO)}'
+SELECT '${esc(name)}', '${esc(desc)}', ${
+          preset ? `'${esc(preset)}'` : "NULL"
+        }, '${esc(EO)}'
 WHERE NOT EXISTS (
   SELECT 1 FROM core_experimentaltechnique WHERE EO_term='${esc(EO)}'
 );
@@ -454,27 +522,42 @@ WHERE NOT EXISTS (
     const sitesList = step4Data.sites || [];
 
     for (const site of sitesList) {
-      const bundle = selectedBySite?.[site] || { kind: "none", hit: null, nearbyGenes: [] };
+      const bundle = selectedBySite?.[site] || {
+        kind: "none",
+        hit: null,
+        nearbyGenes: [],
+      };
+
       const s5 = getStep5ForSite(step5Data, site);
 
       const TF_FUNCTION_MAP = {
-        "activator": "ACT",
-        "repressor": "REP",
-        "dual": "DUAL",
+        activator: "ACT",
+        repressor: "REP",
+        dual: "DUAL",
         "not specified": "N/A",
       };
 
       const TF_TYPE_MAP = {
-        "monomer": "MONOMER",
-        "dimer": "DIMER",
-        "tetramer": "TETRAMER",
-        "other": "OTHER",
+        monomer: "MONOMER",
+        dimer: "DIMER",
+        tetramer: "TETRAMER",
+        other: "OTHER",
         "not specified": "N/A",
       };
 
-      const TF_type = TF_TYPE_MAP[pickFirstNonEmpty(s5?.tfType, "not specified")] ?? "N/A";
-      const TF_function = TF_FUNCTION_MAP[pickFirstNonEmpty(s5?.tfFunc, "not specified")] ?? "N/A";
-      const annotatedSeq = pickFirstNonEmpty(s5?.annotated_seq, s5?.annotatedSeq, site);
+      const TF_type =
+        TF_TYPE_MAP[pickFirstNonEmpty(s5?.tfType, "not specified")] ?? "N/A";
+
+      const TF_function =
+        TF_FUNCTION_MAP[pickFirstNonEmpty(s5?.tfFunc, "not specified")] ??
+        "N/A";
+
+      const annotatedSeq = pickFirstNonEmpty(
+        s5?.annotated_seq,
+        s5?.annotatedSeq,
+        site
+      );
+
       const qv = s5?.quantitative_value ?? s5?.qval ?? s5?.qValue ?? null;
       const qvNum = Number(qv);
       const quantitativeValue = Number.isFinite(qvNum) ? qvNum : null;
@@ -488,6 +571,7 @@ VALUES ('${esc(site)}', ${curationIdExpr},
         ${TF_function ? `'${esc(TF_function)}'` : "NULL"});
           `.trim()
         );
+
         continue;
       }
 
@@ -497,7 +581,9 @@ VALUES ('${esc(site)}', ${curationIdExpr},
       const hitEnd0 = Number(hit.end ?? 0);
       const strand = normalizeStrand(hit.strand);
 
-      const genomeIdExpr = `(SELECT genome_id FROM core_genome WHERE genome_accession='${esc(acc)}' LIMIT 1)`;
+      const genomeIdExpr = `(SELECT genome_id FROM core_genome WHERE genome_accession='${esc(
+        acc
+      )}' LIMIT 1)`;
 
       sql.push(
         `
@@ -544,7 +630,9 @@ VALUES
         ORDER BY id DESC LIMIT 1)`;
 
       const techMap = s5?.techniques || {};
-      const selectedECOs = Object.keys(techMap).filter((eco) => techMap[eco] === true);
+      const selectedECOs = Object.keys(techMap).filter(
+        (eco) => techMap[eco] === true
+      );
 
       for (const eco of selectedECOs) {
         const techIdExpr = `(SELECT technique_id
@@ -568,27 +656,30 @@ WHERE ${techIdExpr} IS NOT NULL
       }
 
       const regsForSite = step6Data?.[site]?.regulatedGenes || [];
-if (Array.isArray(regsForSite) && regsForSite.length > 0) {
-  for (const g of regsForSite) {
-    const locus = pickFirstNonEmpty(g?.locus, "");
-    if (!locus) continue;
 
-    const geneIdExpr = `(SELECT gene_id FROM core_gene
-      WHERE locus_tag='${esc(locus)}' AND genome_id=${genomeIdExpr}
-      ORDER BY gene_id DESC LIMIT 1)`;
+      if (Array.isArray(regsForSite) && regsForSite.length > 0) {
+        for (const g of regsForSite) {
+          const locus = pickFirstNonEmpty(g?.locus, "");
+          if (!locus) continue;
 
-    // Using g.selected to get the exp_verified repressed genes
-    const evidenceType = g.selected ? "exp_verified" : "inferred";
+          const geneIdExpr = `(SELECT gene_id FROM core_gene
+            WHERE locus_tag='${esc(locus)}' AND genome_id=${genomeIdExpr}
+            ORDER BY gene_id DESC LIMIT 1)`;
 
-          sql.push(`  
-      INSERT INTO core_regulation (curation_site_instance_id, gene_id, evidence_type, meta_site_id)
-      SELECT
-        ${curationSiteInstanceIdExpr},
-        ${geneIdExpr},
-        '${esc(evidenceType)}',
-        NULL
-      WHERE ${geneIdExpr} IS NOT NULL;
-          `.trim());
+          // Using g.selected to get the exp_verified repressed genes
+          const evidenceType = g.selected ? "exp_verified" : "inferred";
+
+          sql.push(
+            `  
+INSERT INTO core_regulation (curation_site_instance_id, gene_id, evidence_type, meta_site_id)
+SELECT
+  ${curationSiteInstanceIdExpr},
+  ${geneIdExpr},
+  '${esc(evidenceType)}',
+  NULL
+WHERE ${geneIdExpr} IS NOT NULL;
+            `.trim()
+          );
         }
       }
     }
@@ -600,9 +691,10 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
   async function handleSubmit() {
     setMsg("");
     setLoading(true);
-    
+
     try {
       const sqlString = buildFullSql();
+
       const htmlContent = await generateHTMLFromCurationContext({
         tf,
         uniprotList,
@@ -617,15 +709,16 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
 
       // We compress and pass it to string to be able to sent it to vercel's endpoint
       console.log(htmlContent);
-      
-      const expressionInfo = strainData?.expressionInfo || false; // boolean que controla si hi ha expressió inclosa
-      
-      let tf_instance_id = await getTfInstanceFromUniAcc(uniprotAccession) || null;
+
+      const expressionInfo = strainData?.expressionInfo || false;
+
+      let tf_instance_id =
+        (await getTfInstanceFromUniAcc(uniprotAccession)) || null;
 
       if (tf_instance_id == null) {
-        tf_instance_id = await getMaxTfInstanceId() + 1; // +1 per afegir nova entrada si no es uniprotAccess a BD
+        tf_instance_id = (await getMaxTfInstanceId()) + 1;
       }
-      
+
       // calls vercel to dispatch the curation and creation of the static file
       await dispatchAndCreate(
         { inputs: { queries: sqlString } },
@@ -634,7 +727,7 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
         uniprotAccession,
         expressionInfo
       );
-      
+
       setStep7Data({
         revisionReason,
         curationComplete,
@@ -654,19 +747,24 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
             ? JSON.stringify(e.payload, null, 2)
             : "";
 
-      if (e?.status === 422 && e?.message?.includes("inputs are too large")) {
-        setMsg(`Error: ${e?.message || String(e)}\n\n${details} \n Sending the curated data without updating the corresponding static page.\n Please await until the process completes.`);
+      if (
+        e?.status === 422 &&
+        e?.message?.includes("inputs are too large")
+      ) {
+        setMsg(
+          `Error: ${
+            e?.message || String(e)
+          }\n\n${details} \n Sending the curated data without updating the corresponding static page.\n Please await until the process completes.`
+        );
 
         await dispatchAndCreate(
-        { inputs: { queries: sqlString } },
-        "",
-        tf_instance_id,
-        uniprotAccession,
-        "false"
-      );
-
-      }
-      else {
+          { inputs: { queries: sqlString } },
+          "",
+          tf_instance_id,
+          uniprotAccession,
+          "false"
+        );
+      } else {
         setMsg(`Error: ${e?.message || String(e)}\n\n${details} `);
       }
     } finally {
@@ -681,34 +779,51 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
       <div className="bg-surface border border-border rounded p-4 space-y-3">
         <div>
           <label className="block font-medium mb-1">Revision required</label>
-          <select className="form-control" value={revisionReason} onChange={(e) => setRevisionReason(e.target.value)}>
+          <select
+            className="form-control"
+            value={revisionReason}
+            onChange={(e) => setRevisionReason(e.target.value)}
+          >
             {REVISION_REASONS.map((r) => (
               <option key={r.value} value={r.value}>
                 {r.label}
               </option>
             ))}
           </select>
+
           <p className="text-xs text-muted mt-1">
             Select, if needed, the reason why this curation may require revision.
           </p>
         </div>
 
         <label className="inline-flex items-start gap-2 text-sm">
-          <input type="checkbox" checked={curationComplete} onChange={(e) => setCurationComplete(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={curationComplete}
+            onChange={(e) => setCurationComplete(e.target.checked)}
+          />
+
           <span>
-            <div className="font-medium">Curation for this paper is complete</div>
-            <div className="text-xs text-muted">Check if there are no more curations pending for this paper.</div>
+            <div className="font-medium">
+              Curation for this paper is complete
+            </div>
+
+            <div className="text-xs text-muted">
+              Check if there are no more curations pending for this paper.
+            </div>
           </span>
         </label>
 
         <div>
           <label className="block font-medium mb-1">Notes</label>
+
           <textarea
             className="form-control w-full h-40"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Any additional notes on the curation process..."
           />
+
           <p className="text-xs text-muted mt-1">
             Include any relevant notes (e.g., why sites were left out, surrogate genome choice, etc.).
           </p>
@@ -726,7 +841,15 @@ if (Array.isArray(regsForSite) && regsForSite.length > 0) {
         </button>
       </div>
 
-      {msg && <div className={`text-sm ${msg.startsWith("✅") ? "text-green-400" : "text-red-400"}`}>{msg}</div>}
+      {msg && (
+        <div
+          className={`text-sm ${
+            msg.startsWith("✅") ? "text-green-400" : "text-red-400"
+          }`}
+        >
+          {msg}
+        </div>
+      )}
     </div>
   );
 }

@@ -52,6 +52,7 @@ async function fetchNuccoreTaxInfo(acc) {
 
   const out = {
     taxid: rec.taxid ? String(rec.taxid) : "",
+    gi: rec.gi ? String(rec.gi) : "",
     organism: rec.organism || "",
     title: rec.title || "",
   };
@@ -376,10 +377,19 @@ export default function Step2GenomeTF() {
     setGenomeSuggestions(rows);
   }
 
-  async function addGenomeItem(accession, description, organism) {
+  async function addGenomeItem(accession, description, organism, gi) {
     if (genomeItems.some((x) => x.accession === accession)) return;
 
-    const updated = [...genomeItems, { accession, description, organism }];
+    const updated = [
+      ...genomeItems,
+      {
+        accession,
+        description,
+        organism,
+        gi,
+      },
+    ];
+
     setGenomeItems(updated);
     setGenomeList(updated);
 
@@ -405,11 +415,15 @@ export default function Step2GenomeTF() {
   }
 
   // Quan l’accession no és a la DB, el validem a NCBI
-  async function fetchNuccoreSummary(acc) {
-    const info = await fetchNuccoreTaxInfo(acc);
-    if (!info) return null;
-    return { title: info.title, organism: info.organism };
-  }
+  const info = await fetchNuccoreSummary(acc);
+  if (!info) return;
+
+  await addGenomeItem(
+    acc,
+    info.title,
+    info.organism,
+    info.gi
+  );
 
   // UniProt: validació bàsica i nom/descripció
   async function fetchUniprotSummary(acc) {
