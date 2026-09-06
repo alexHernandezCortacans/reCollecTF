@@ -414,6 +414,9 @@ export default function Step2GenomeTF() {
     setGenomeInput("");
   }
 
+ 
+
+  // Quan l’accession no és a la DB, el validem a NCBI
   async function fetchNuccoreSummary(acc) {
     const info = await fetchNuccoreTaxInfo(acc);
     if (!info) return null;
@@ -424,17 +427,6 @@ export default function Step2GenomeTF() {
       gi: info.gi,
     };
   }
-
-  // Quan l’accession no és a la DB, el validem a NCBI
-  const info = await fetchNuccoreSummary(acc);
-  if (!info) return;
-
-  await addGenomeItem(
-    acc,
-    info.title,
-    info.organism,
-    info.gi
-  );
 
   // UniProt: validació bàsica i nom/descripció
   async function fetchUniprotSummary(acc) {
