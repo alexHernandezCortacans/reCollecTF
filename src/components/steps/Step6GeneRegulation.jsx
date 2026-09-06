@@ -31,6 +31,12 @@ export default function Step6GeneRegulation() {
   const [activeSite, setActiveSite] = useState(null);
 
   useEffect(() => {
+    if (sites.length > 0 && !activeSite) {
+      setActiveSite(sites[0]);
+    }
+  }, [sites, activeSite]);
+
+  useEffect(() => {
     if (!sites.length) return;
 
     setRegulation((prev) => {
