@@ -414,6 +414,17 @@ export default function Step2GenomeTF() {
     setGenomeInput("");
   }
 
+  async function fetchNuccoreSummary(acc) {
+    const info = await fetchNuccoreTaxInfo(acc);
+    if (!info) return null;
+
+    return {
+      title: info.title,
+      organism: info.organism,
+      gi: info.gi,
+    };
+  }
+
   // Quan l’accession no és a la DB, el validem a NCBI
   const info = await fetchNuccoreSummary(acc);
   if (!info) return;
