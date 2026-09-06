@@ -128,7 +128,7 @@ jobs:
       - name: Wait for HTML file to be visible
         run: |
           set -euo pipefail
-          HTML_FILE="pending-html/${{ github.event.inputs.expression_id }}.html.gz.b64"
+          HTML_FILE="pending-html/${{ github.event.inputs.expression_id }}.html.gz"
           
           echo "Waiting for HTML file to be visible: $HTML_FILE"
           for i in {1..120}; do
@@ -147,7 +147,7 @@ jobs:
       - name: Decode and decompress html_content
         run: |
           set -euo pipefail
-          HTML_FILE="pending-html/${{ github.event.inputs.expression_id }}.html.gz.b64"
+          HTML_FILE="pending-html/${{ github.event.inputs.expression_id }}.html.gz"
           cat "$HTML_FILE" | base64 -d | gunzip > /tmp/index.html
           git rm "$HTML_FILE"
           echo "HTML_PATH=/tmp/index.html" >> $GITHUB_ENV
